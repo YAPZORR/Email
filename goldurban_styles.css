@@ -1,0 +1,128 @@
+
+/* Gold Urban — two coded email campaign design options.
+   Headings: Bebas Neue. Subheads/body: Nunito Sans.
+   Matches provided campaign brief; placeholders are intentionally unfilled. */
+@import url('https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Nunito+Sans:wght@400;500;600;700;800;900&display=swap');
+:root{--gold:#f0ce63;--gold-deep:#dfb747;--black:#08090b;--gray:#e1e5e9;--body:'Nunito Sans','Nunito','Arial',sans-serif;--display:'Bebas Neue','Noto Sans Display ExtraCondensed','Impact',sans-serif}
+*{box-sizing:border-box}
+html,body{padding:0;margin:0}
+body{font-family:var(--body);background:#e2e3e4;color:#0a0a0a;-webkit-font-smoothing:antialiased}
+a{text-decoration:none}
+img{border:0;display:block;max-width:100%}
+.email{width:600px;min-width:0;background:#fff;color:#0a0a0a;box-shadow:0 10px 25px rgba(0,0,0,.12);overflow:hidden}
+.email h1,.email h2,.email h3,.email p{margin:0}
+.email h1,.email h2,.email h3{font-family:var(--display);text-transform:uppercase;font-stretch:condensed;font-weight:800;letter-spacing:.3px}
+.brand-head{height:89px;background:#fff;display:flex;align-items:center;justify-content:center}
+.brand-head .brand-logo{width:195px;height:auto;max-height:63px;object-fit:contain}
+.announcement{height:50px;background:#050506;color:var(--gold);text-align:center;font-size:14px;line-height:50px;font-weight:900;letter-spacing:1.85px}
+.fabric-a{background-color:#050506;background-image:url('assets/black_satin_a.jpg');background-size:cover;background-position:center}
+.fabric-b{background-color:#050506;background-image:url('assets/black_satin_b.jpg');background-size:cover;background-position:center}
+.cta{display:inline-block;padding:17px 27px;min-width:228px;text-align:center;font-family:var(--body);font-size:13px;font-weight:900;line-height:1.15;border-radius:6px;letter-spacing:.12px}
+.cta-white{background:#fff;color:#09090a}
+.cta-black{background:#070707;color:#fff}
+.deadline{font-family:var(--body);font-weight:500;font-size:12.5px;line-height:1.6;color:#cdcdcd}
+.hero-copy{background:#070707;color:#fff;text-align:center;padding:31px 55px 42px}
+.hero-copy p{font-size:16px;line-height:1.55;font-weight:500;letter-spacing:-.2px}
+.hero-copy .hero-copy-emphasis{font-size:16px;font-weight:800;margin-top:13px;margin-bottom:24px}
+.hero-copy .deadline{margin-top:18px}
+.eyebrow{font-family:var(--body);font-size:13px;font-weight:900;letter-spacing:2.2px;color:#b08e35}
+.intro-panel{background:#fff;text-align:center;padding:53px 27px 42px}
+.intro-panel h2{font-size:49px;line-height:.98;letter-spacing:.35px}
+.feature-a-photo{overflow:hidden}
+.feature-a-text{text-align:center;padding:33px 49px 46px}
+.feature-a-text h3{font-size:49px;line-height:.98;margin:10px 0 13px}
+.feature-a-text>p:not(.eyebrow){font-size:15px;font-weight:500;line-height:1.63;max-width:490px;margin:0 auto 24px}
+.feature-a-text .cta{min-width:225px}
+.trust-strip{height:67px;display:flex;align-items:center;justify-content:center;background:#e4e6e9;color:#0b0b0b;font-weight:900;letter-spacing:1.25px;font-size:13px;text-align:center}
+.footer{background:#050505;color:#fff;padding:36px 22px 45px;text-align:center;min-height:178px}
+.footer-logo{width:204px;height:auto;margin:0 auto 27px}
+.footer-line{font-size:12px;line-height:1.65;font-weight:500;color:#a6a6a6}
+.footer-terms{margin-top:10px;color:#838383}
+.final-a,.final-b{color:#fff;position:relative;text-align:center;overflow:hidden}
+.final-a h2,.final-b h2{font-size:60px;line-height:.93;color:#fff}
+.final-a h2 span,.final-b h2 span{color:var(--gold)}
+.final-a p,.final-b p{font-size:16px;line-height:1.55}
+.final-a .deadline,.final-b .deadline{font-size:12.5px;color:#d3d3d3;margin-top:17px}
+.final-a .code-instructions,.final-b .code-instructions{color:#999;font-size:11px;line-height:1.7;max-width:490px;margin:9px auto 0}
+
+/* OPTION A : editorial lifestyle / dark satin + full-width image */
+.email-a .hero-a{color:#fff}
+.hero-a-title{text-align:center;padding:42px 24px 18px;background:linear-gradient(180deg,rgba(0,0,0,.04),rgba(0,0,0,.42))}
+.hero-a-title h1{font-size:74px;line-height:.88;color:var(--gold);letter-spacing:.5px}
+.hero-a-title h1 span{color:#fff}
+.hero-a-photo{height:404px;position:relative;overflow:hidden;background:#030303}
+.hero-a-model{width:100%;height:100%;object-fit:cover;object-position:center 45%}
+.hero-a-photo-shade{position:absolute;inset:0;background:linear-gradient(180deg,rgba(0,0,0,.0) 20%,rgba(0,0,0,.08) 70%,rgba(0,0,0,.8) 100%)}
+.hero-a-offer{position:absolute;bottom:22px;left:50%;transform:translateX(-50%);background:rgba(5,5,5,.94);border:1px solid rgba(244,213,121,.48);padding:12px 29px;color:var(--gold);white-space:nowrap;font-size:18px;letter-spacing:1.9px;font-weight:900}
+.email-a .hero-copy{padding-top:33px;padding-bottom:45px;background:#060606}
+.email-a .intro-panel{padding-top:60px;padding-bottom:51px}
+.email-a .feature-a-chains{background:#fff}
+.chains-photo{height:391px;background:#050506}
+.chains-photo img{width:100%;height:100%;object-fit:cover;object-position:center 54%}
+.email-a .feature-a-iced{background:#090a0b;color:#fff}
+.iced-photo{height:329px;position:relative;background-size:100% 100%;background-position:center}
+.iced-gold-detail{position:absolute;width:94%;height:auto;max-width:none;left:3%;top:32px;filter:drop-shadow(0 0 17px rgba(207,150,28,.12))}
+.email-a .feature-a-iced .feature-a-text{padding-top:35px;padding-bottom:51px}
+.email-a .feature-a-iced .eyebrow{color:var(--gold)}
+.email-a .feature-a-sets{background:#e0e4e8;padding-top:20px}
+.sets-photo-grid{display:grid;grid-template-columns:1fr 1fr;gap:9px;padding:0 20px}
+.sets-photo-grid>div{height:260px;overflow:hidden;background:#090909}
+.sets-photo-grid img{height:100%;width:100%;object-fit:cover}
+.sets-photo-grid>div:first-child img{object-position:center}
+.sets-photo-grid>div:last-child img{object-position:center}
+.email-a .feature-a-sets .feature-a-text{padding-top:32px}
+.final-a{padding:54px 40px 45px}
+.final-a h2{margin-bottom:18px}
+.final-a p{margin-bottom:22px}
+.final-a .deadline,.final-a .code-instructions{margin-bottom:0}
+.final-detail{height:1px;background:linear-gradient(90deg,transparent,#c6a141,transparent);width:70%;margin:0 auto 26px;opacity:.65}
+
+/* OPTION B : graphic-led promotional hero / modular product cards */
+.email-b .hero-b{color:#fff;background-position:center}
+.hero-b-stage{height:550px;position:relative;overflow:hidden;background:linear-gradient(130deg,#070707 0%,rgba(0,0,0,.18) 65%,#050505 100%)}
+.hero-b-typography{position:absolute;z-index:3;top:47px;left:34px;right:34px;text-align:left}
+.hero-b-typography h1{font-size:76px;line-height:.86;color:#fff;text-shadow:0 3px 16px #000;letter-spacing:.4px}
+.hero-b-typography h1 span{color:var(--gold)}
+.hero-b-held{position:absolute;z-index:1;width:590px;height:595px;left:10px;top:52px;overflow:hidden;mask-image:linear-gradient(180deg,transparent,black 24%,black 82%,transparent);-webkit-mask-image:linear-gradient(180deg,transparent,black 24%,black 82%,transparent)}
+.hero-b-held img{height:100%;width:100%;object-fit:cover;object-position:center 48%;filter:brightness(.89) contrast(1.13)}
+.hero-b-stage:after{content:'';position:absolute;z-index:2;inset:0;background:linear-gradient(180deg,rgba(0,0,0,.55) 0%,transparent 34%,transparent 62%,rgba(0,0,0,.86) 92%);pointer-events:none}
+.hero-b-badge{position:absolute;z-index:4;bottom:26px;left:27px;right:27px;text-align:center;border-top:1px solid rgba(251,218,129,.8);border-bottom:1px solid rgba(251,218,129,.8);padding:13px 0 11px;background:rgba(0,0,0,.55)}
+.hero-b-badge b{color:var(--gold);font-family:var(--display);font-size:43px;line-height:1;letter-spacing:1.6px}
+.hero-copy-b{padding:32px 51px 42px}
+.b-products{background:#e2e5e9;padding:0 19px 24px}
+.b-products .intro-panel{margin:0 -19px;background:#fff;padding:49px 27px 42px}
+.b-products .intro-panel h2{font-size:48px}
+.b-card{background:#fff;margin-top:16px;text-align:center;overflow:hidden}
+.b-card-art{position:relative;overflow:hidden;background:#060606}
+.b-art-chains{height:368px}
+.b-art-chains img{position:absolute;width:110%;max-width:none;left:-1%;top:17px}
+.b-art-iced{height:358px}
+.b-art-iced img{position:absolute;width:115%;max-width:none;left:-7%;top:12px}
+.b-card-copy{padding:28px 35px 52px}
+.b-card-copy .eyebrow{font-size:12px}
+.b-card-copy h3{font-size:48px;line-height:.99;margin:7px 0 10px}
+.b-card-copy>p:not(.eyebrow){font-size:14px;line-height:1.6;margin:0 auto 21px;font-weight:500}
+.b-card-copy .cta{padding-top:15px;padding-bottom:15px;min-width:215px}
+.b-art-pair{display:grid;grid-template-columns:1fr 1fr;gap:8px;background:#fff;padding:9px 9px 0}
+.b-art-pair>div{height:318px;background:#040404;overflow:hidden}
+.b-art-pair img{width:100%;height:100%;object-fit:cover}
+.trust-b{background:#090909;color:#fff;height:65px;border-top:1px solid #343434}
+.final-b{padding:84px 36px 70px;background-position:center}
+.final-b-deco{position:absolute;z-index:0;left:-130px;top:-147px;width:325px;opacity:.25;transform:rotate(-11deg)}
+.final-b-content{position:relative;z-index:1}
+.final-b h2{margin-bottom:21px}
+.final-b p{margin-bottom:20px}
+.final-b .deadline,.final-b .code-instructions{margin-bottom:0}
+
+/* Two-column desktop look-book. No additional visible campaign copy. */
+.preview-sheet{display:grid;grid-template-columns:600px 600px;column-gap:32px;align-items:start;justify-content:center;margin:0 auto;padding:24px 24px 28px;width:max-content;max-width:none}
+.preview-sheet>.email{margin:0}
+@media screen and (max-width:1290px){.preview-sheet{display:flex;align-items:center;flex-direction:column;width:100%;padding:14px;gap:26px}}
+@media screen and (max-width:625px){.preview-sheet{padding:0;gap:22px}.email{width:100%;max-width:600px}.brand-head{height:76px}.hero-a-title h1{font-size:clamp(48px,12vw,74px)}.hero-b-typography h1{font-size:clamp(52px,13vw,76px)}.hero-b-badge b{font-size:clamp(30px,7vw,43px)}.intro-panel h2{font-size:clamp(34px,8vw,49px)}.feature-a-text h3,.b-card-copy h3{font-size:clamp(36px,8vw,49px)}.hero-a-photo{height:clamp(285px,70vw,404px)}}
+@media print{
+  @page{margin:0;size:340mm 1100mm}
+  *{-webkit-print-color-adjust:exact!important;print-color-adjust:exact!important}
+  html,body{width:100%!important;background:#e2e3e4!important}
+  .preview-sheet{display:grid!important;grid-template-columns:600px 600px!important;gap:32px!important;justify-content:center!important;padding:24px 24px 28px!important;width:max-content!important;}
+  .email{box-shadow:none}
+}
