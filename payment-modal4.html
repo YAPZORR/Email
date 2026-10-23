@@ -385,8 +385,8 @@
     width: 100%; table-layout: fixed;
     color: var(--subtle); text-align: left;
 }
-.comparison-table .feature-col { width: 53%; }
-.comparison-table .tier-col { width: 15.6666667%; }
+.comparison-table .feature-col { width: 38%; }
+.comparison-table .tier-col { width: 20.6666667%; }
 .comparison-table thead tr { height: 54px; }
 .comparison-table th, .comparison-table td { vertical-align: middle; }
 .comparison-table thead th {
@@ -463,6 +463,8 @@
    collapsing values into mismatched rows. The page itself never hides plans. */
 @media (max-width: 920px) {
   .comparison-table { min-width: 770px; }
+  .comparison-table .feature-col { width: 44%; }
+  .comparison-table .tier-col { width: 18.6666667%; }
   .comparison-table tbody th,.comparison-table tbody td { font-size: 14px; }
   .comparison-table .feature-name { font-size: 16px; }
 }
