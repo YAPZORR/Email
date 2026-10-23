@@ -1,0 +1,505 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+  <meta name="theme-color" content="#0a0820">
+  <title>SpicyLab — Mobile Pricing & Benefits Showcase</title>
+  <style>
+:root {
+  color-scheme:dark;
+  --page:#0a0820; --page-deep:#06081a; --panel:#100c27; --panel-lift:#15102f;
+  --panel-border:#2b2347; --text:#f3f1ff; --subtle:#d8d2f4;
+  --muted:#9c96c3; --disabled:#6d6895; --purple:#7b4dff;
+  --violet:#c43cf2; --pink:#ec4aa9; --pink-deep:#d23e9e;
+  --pink-lite:#ff73c8; --gold:#fecb00; --gold-bright:#ffd95a;
+  --blue:#3ec6f4;
+}
+*,*::before,*::after {box-sizing:border-box;}
+html {background:var(--page);scroll-behavior:smooth;}
+body {margin:0;min-width:280px;overflow-x:hidden;color:var(--text);
+  font-family:Inter,"Inter Display",ui-sans-serif,-apple-system,BlinkMacSystemFont,"Segoe UI",Arial,sans-serif;
+  -webkit-font-smoothing:antialiased;
+  background:
+    radial-gradient(ellipse 390px 480px at -45% 1%,rgba(107,56,211,.30),transparent 85%),
+    radial-gradient(ellipse 360px 490px at 125% 21%,rgba(41,72,177,.15),transparent 82%),
+    radial-gradient(ellipse 380px 550px at -10% 69%,rgba(124,40,133,.12),transparent 85%),
+    #0a0820;
+}
+button {font-family:inherit;}
+button:focus-visible {outline:2px solid #e675fb;outline-offset:3px;}
+svg.icon {width:17px;height:17px;flex:0 0 auto;display:block;fill:none;
+  stroke:currentColor;stroke-linecap:round;stroke-linejoin:round;stroke-width:1.8;}
+svg.sprite {position:absolute;width:0;height:0;overflow:hidden;}
+.all-plans-showcase {width:min(100%,480px);margin:auto;padding:24px 12px 72px;}
+.page-intro {text-align:center;padding:5px 8px 24px;}
+.page-intro h1 {font-size:36px;letter-spacing:-.061em;line-height:1.06;font-weight:850;color:#fff;margin:0;}
+.page-intro h1 span {background:linear-gradient(105deg,#ec4aa9,#c43cf2);color:transparent;-webkit-background-clip:text;background-clip:text;}
+.page-intro .subtitle {margin:9px auto 14px;max-width:310px;color:#aaa1ce;font-size:13px;line-height:1.53;}
+.trust-row {display:flex;align-items:center;justify-content:center;gap:9px;}
+.avatars {display:flex;padding-left:3px;}
+.avatar {width:24px;height:24px;margin-left:-4px;border:2px solid #100c27;border-radius:50%;display:grid;place-items:center;color:#fff;background:linear-gradient(135deg,#a07bff,#6a3df0);}
+.avatar:nth-child(2){background:linear-gradient(135deg,#ff73c8,#d93f9f);}
+.avatar:nth-child(3){background:linear-gradient(135deg,#ffd95e,#f29a06);color:#513000;}
+.avatar:nth-child(4){background:linear-gradient(135deg,#7fdcff,#2f8cff);}
+.avatar .icon {height:11px;width:11px;}
+.trust-copy {text-align:left;font-size:10.3px;line-height:1.28;color:#bcb1d2;}
+.trust-copy strong {color:#fff;font-weight:770;}
+.rating-line {display:flex;align-items:center;gap:6px;margin-top:2px;}
+.stars {color:#fff;letter-spacing:.12em;font-size:9.3px;}
+
+/* Each tab state appears immediately, expanded and never requires interaction. */
+.plan-preview {--active:#985bff;--active-soft:rgba(123,77,255,.17);
+  position:relative;isolation:isolate;margin:0 0 30px;padding:1px;
+  border-radius:24px;box-shadow:0 20px 46px rgba(0,0,0,.28),0 0 0 1px rgba(58,41,101,.30);
+  background:linear-gradient(170deg,rgba(142,108,211,.48),rgba(51,35,85,.56) 23%,rgba(57,42,93,.52) 88%,rgba(126,70,171,.35));}
+.preview-quarterly {--active:#ec4aa9;--active-soft:rgba(236,74,169,.18);}
+.preview-annual {--active:#fecb00;--active-soft:rgba(254,203,0,.10);}
+.preview-content {padding:13px 12px 12px;overflow:hidden;border-radius:23px;background:
+  radial-gradient(ellipse 240px 105px at 100% -8%,var(--active-soft),transparent 90%),
+  linear-gradient(180deg,#15102c 0%,#0c0a22 49%,#0b091d 100%);}
+.plan-preview::before {content:"";position:absolute;z-index:2;top:-1px;left:26px;width:62px;height:3px;border-radius:0 0 12px 12px;background:var(--active);box-shadow:0 0 18px var(--active-soft);}
+
+/* Familiar three price tabs, sized to read well on phones. */
+.plan-tabs {display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:6px;margin:0 0 14px;padding-top:4px;}
+.plan-tab {position:relative;display:flex;flex-direction:column;align-items:flex-start;gap:0;
+  min-width:0;min-height:94px;padding:9px 8px 8px;border:1px solid rgba(170,147,218,.13);
+  border-radius:13px;color:#e5d9f4;background:linear-gradient(160deg,#201730,#161126 90%);}
+.plan-tab[aria-selected=true] {border-color:rgba(224,106,255,.62);
+  background:linear-gradient(145deg,rgba(130,77,246,.42),rgba(222,62,175,.22)),#20162e;
+  box-shadow:inset 0 1px 0 rgba(255,255,255,.15),0 5px 16px rgba(181,65,213,.16);}
+.plan-tab[data-plan=quarterly][aria-selected=true]{background:linear-gradient(145deg,rgba(236,74,169,.38),rgba(142,44,148,.18)),#20162e;}
+.plan-tab[data-plan=annual][aria-selected=true]{border-color:rgba(254,203,0,.53);background:linear-gradient(145deg,rgba(254,203,0,.15),rgba(134,65,96,.15)),#20162e;}
+.plan-tab .plan-icon {position:absolute;top:8px;left:7px;width:22px;height:22px;display:grid;place-items:center;border-radius:7px;color:#fff;
+  background:linear-gradient(130deg,#a07bff,#6a3df0);}
+.plan-tab[data-plan=quarterly] .plan-icon {background:linear-gradient(135deg,#ff73c8,#d23e9e);}
+.plan-tab[data-plan=annual] .plan-icon {color:#4e3500;background:linear-gradient(135deg,#ffe58e,#e5a921);}
+.plan-tab .plan-icon .icon {width:12px;height:12px;}
+.plan-tab .identity {margin-left:27px;display:flex;flex-direction:column;gap:4px;min-height:27px;}
+.plan-tab .plan-name {font-size:10.6px;font-weight:760;line-height:1.08;letter-spacing:-.015em;}
+.plan-tab .plan-coins {font-size:8.7px;color:#b4a3d4;line-height:1.1;white-space:nowrap;}
+.small-coin {display:none;}
+.plan-tab .plan-cost {margin-top:auto;padding-top:9px;display:flex;align-items:baseline;gap:3px;flex-wrap:wrap;}
+.plan-cost b {font-size:20px;font-weight:850;color:white;line-height:1;letter-spacing:-.048em;}
+.plan-cost small {font-size:8.7px;color:#a99bbc;white-space:nowrap;letter-spacing:-.025em;}
+.best-value {position:absolute;z-index:2;top:-12px;right:0;display:flex;align-items:center;gap:2px;
+  padding:4px 6px 3px;border-radius:999px;background:#ffda64;color:#503008;
+  font-size:8px;font-weight:850;line-height:1;box-shadow:0 3px 9px rgba(228,159,0,.17);}
+.best-value .icon {width:10px;height:10px;}
+
+/* Selected price card + usage counters. */
+.plan-main {min-width:0;}
+.summary-row {margin-bottom:14px;}
+.price-panel {padding:15px 16px 14px;min-height:89px;border:1px solid rgba(207,138,255,.20);
+  border-radius:15px;background:
+  radial-gradient(ellipse at 110% 110%,var(--active-soft),transparent 66%),
+  linear-gradient(120deg,#251634,#1b1432 58%,#1a112a);}
+.headline-price {display:flex;align-items:baseline;gap:8px;}
+.headline-price strong {color:#fff;font-size:38px;font-weight:860;letter-spacing:-.065em;line-height:1.02;}
+.headline-price span {color:#c1add3;font-size:11px;}
+.billing {margin:6px 0 0;color:#cbb9db;font-size:11.4px;font-weight:600;letter-spacing:-.01em;}
+.metrics-panel {display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:7px;margin-top:9px;}
+.metric {min-width:0;min-height:59px;border:1px solid rgba(148,108,181,.15);border-radius:12px;
+  background:rgba(29,20,52,.80);display:flex;align-items:center;justify-content:center;gap:8px;padding:7px 4px;}
+.metric-icon {flex:0 0 24px;width:24px;height:24px;border-radius:8px;display:grid;place-items:center;
+  color:white;background:linear-gradient(135deg,#9d68ff,#673fee);}
+.metric-icon .icon {height:13px;width:13px;}
+.metric-icon.coin {background:linear-gradient(135deg,#ffea8d,#e8a128);color:#7e4b00;font-weight:900;font-size:13px;border-radius:50%;}
+.metric-icon.video {background:linear-gradient(135deg,#ff73c8,#d23e9e);}
+.metric-icon.picture {background:linear-gradient(135deg,#a07bff,#6a3df0);}
+.metric-label {display:flex;flex-direction:column;gap:2px;min-width:0;}
+.metric-label b {font-size:19px;font-weight:830;letter-spacing:-.045em;line-height:1;color:white;}
+.metric-label small {font-size:9.7px;color:#aa9abf;line-height:1;}
+
+/* NEW mobile comparison: a true single table, not 14 detached cards.
+   The first column is always in reading proximity to the three plan values. */
+.comparison-benefits {overflow:hidden;border:1px solid rgba(154,122,204,.19);border-radius:15px;
+  background:linear-gradient(180deg,#140d2b,#110b25);}
+.benefit-heading {display:flex;align-items:center;justify-content:space-between;gap:12px;padding:15px 12px 0;}
+.benefit-heading>strong {color:#f8f0ff;font-size:15px;font-weight:810;letter-spacing:-.02em;}
+.benefit-heading .count {color:#baa8ce;font-size:10.9px;white-space:nowrap;}
+.benefit-heading .count strong {color:#f7e9ff;}
+.progress-track {display:grid;grid-template-columns:repeat(14,minmax(0,1fr));gap:4px;margin:11px 12px 14px;}
+.progress-track span {height:5px;border-radius:100px;background:#312543;}
+.progress-track span.on {background:linear-gradient(90deg,#aa4cff,#ec4aa9);box-shadow:0 0 7px rgba(202,62,222,.18);}
+.preview-annual .progress-track span.on {background:linear-gradient(90deg,#be5bfd,#f06cb3);}
+.compare-viewport {overflow:hidden;max-width:100%;border-top:1px solid rgba(178,130,217,.14);}
+.comparison-table {width:100%;border-spacing:0;border-collapse:collapse;table-layout:fixed;}
+.comparison-table .feature-col {width:44%;}
+.comparison-table .tier-col {width:18.6666667%;}
+.comparison-table th,.comparison-table td {vertical-align:middle;}
+.comparison-table thead th {height:48px;padding:6px 3px;text-align:center;background:#211431;
+  color:#c2b1da;border-bottom:1px solid rgba(204,150,221,.21);}
+.comparison-table .benefit-table-title {text-align:left;padding:8px 6px 8px 10px;
+  color:#c1abcf;text-transform:uppercase;letter-spacing:.085em;font-size:10px;font-weight:800;}
+.tier-head .tier-title {display:flex;flex-direction:column;align-items:center;justify-content:center;gap:3px;
+  font-size:10px;line-height:1.1;font-weight:750;white-space:normal;}
+.tier-mini-icon {display:grid;place-items:center;width:18px;height:18px;border-radius:6px;color:white;
+  background:linear-gradient(135deg,#a07bff,#6a3df0);}
+.tier-mini-icon .icon {width:11px;height:11px;}
+.tier-mini-icon.icon-1 {background:linear-gradient(135deg,#ff73c8,#d23e9e);}
+.tier-mini-icon.icon-2 {color:#503500;background:linear-gradient(135deg,#ffe58e,#e5a921);}
+.comparison-table .tier-head.is-current {color:#fff;box-shadow:inset 0 3px 0 var(--active);
+  background:linear-gradient(180deg,rgba(156,61,199,.30),rgba(218,68,163,.20));}
+.preview-annual .comparison-table .tier-head.is-current{background:linear-gradient(180deg,rgba(254,203,0,.15),rgba(235,91,138,.10));}
+.comparison-table tbody th,.comparison-table tbody td {
+  border-bottom:1px solid rgba(159,123,185,.10);padding:11px 6px;}
+.comparison-table tbody tr:last-child th,.comparison-table tbody tr:last-child td {border-bottom:none;}
+.comparison-table tbody tr:nth-child(even) {background:rgba(255,255,255,.017);}
+.comparison-table tbody .feature-name {padding-left:11px;padding-right:6px;
+  text-align:left;font-weight:650;font-size:13.5px;line-height:1.28;color:#e4d9ee;
+  letter-spacing:-.016em;overflow-wrap:break-word;}
+.comparison-table tbody .feature-value {text-align:center;overflow-wrap:anywhere;
+  padding:9px 3px;font-weight:600;line-height:1.25;font-size:10.8px;color:#af9fc9;}
+.comparison-table tbody .feature-value.is-current {color:#fff0fb;font-weight:780;
+  background:linear-gradient(90deg,rgba(236,74,169,.17),rgba(162,61,192,.18));
+  box-shadow:inset 1px 0 0 rgba(234,101,226,.10),inset -1px 0 0 rgba(234,101,226,.10);}
+.preview-annual .comparison-table tbody .feature-value.is-current {background:linear-gradient(90deg,rgba(240,184,54,.12),rgba(182,104,121,.13));color:#fff4d8;}
+.status-mark {display:inline-flex;align-items:center;justify-content:center;width:18px;height:19px;}
+.status-mark .icon {width:18px;height:18px;stroke-width:2.5;}
+.status-mark.included {color:#d99be8;}
+.status-mark.unavailable {color:#635879;}
+.feature-value.is-current .status-mark.included {color:#fff2fa;filter:drop-shadow(0 0 4px rgba(233,127,222,.30));}
+.feature-value.is-current .status-mark.unavailable {color:#8d7a99;}
+.comparison-upgrade {min-height:39px;padding:10px 13px;display:flex;align-items:center;
+  justify-content:flex-end;gap:7px;text-align:right;font-size:11px;font-weight:780;
+  color:var(--gold-bright);border-top:1px solid rgba(169,126,196,.13);}
+.comparison-upgrade .icon {width:13px;height:13px;}
+
+/* Payment area is still included in every preview, with the same copy. */
+.payment-panel {padding:13px 0 9px;}
+.primary-pay {position:relative;width:100%;height:48px;display:flex;align-items:center;justify-content:center;gap:10px;
+  border:1px solid rgba(255,167,224,.58);border-radius:12px;color:#fff;font-size:13px;font-weight:800;
+  background:linear-gradient(100deg,#fa58b0,#db3b9f);box-shadow:0 5px 18px rgba(236,74,169,.15);cursor:pointer;}
+.price-pill {font-size:10px;font-weight:800;background:rgba(255,255,255,.19);border-radius:100px;padding:4px 8px;}
+.pay-arrow {position:absolute;right:9px;top:50%;transform:translateY(-50%);display:grid;place-items:center;
+  height:29px;width:29px;border-radius:50%;background:rgba(255,255,255,.19);border:1px solid rgba(255,255,255,.3);}
+.pay-arrow .icon {height:14px;width:14px;}
+.alternative-pays {display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-top:8px;}
+.alternative-pays button {display:flex;align-items:center;justify-content:center;gap:6px;
+  min-width:0;min-height:40px;border-radius:10px;color:#e6e5fa;background:#17182e;border:1px solid #323755;
+  font-size:11px;font-weight:730;cursor:pointer;}
+.alternative-pays .crypto{color:#f1d5a5;background:#211a2b;border-color:#4e3840;}
+.alternative-pays button svg {height:15px;width:15px;}
+.telegram-icon{color:#6fc8ff;}
+.bitcoin-icon{color:#f9ae36;}
+.secured {display:flex;align-items:center;justify-content:center;gap:4px;flex-wrap:wrap;margin-top:10px;
+  color:#aaa2c2;font-size:9px;}
+.secured>.icon{width:12px;height:12px;margin-right:2px;color:#42d7ad;}
+.payment-brand{color:#1e347e;background:#fff;padding:1px 4px;border-radius:3px;font-size:8px;font-weight:900;line-height:1.3;}
+.payment-brand.mastercard{color:#f3a31d;font-size:11px;letter-spacing:-8px;padding-right:10px;}
+.payment-brand.mastercard .second-circle{color:#f2614a;}
+.payment-brand.apple{color:#0c101b;font-size:7px;}
+.payment-brand.paypal{color:#15599f;font-size:7px;}
+.telegram-guide {display:grid;grid-template-columns:35px minmax(0,1fr);column-gap:10px;row-gap:10px;
+  padding:13px;margin-top:4px;border:1px solid rgba(140,108,197,.19);border-radius:14px;
+  background:linear-gradient(120deg,#1b1538,#1a1232);}
+.guide-art {display:grid;place-items:center;height:35px;width:35px;border-radius:11px;
+  background:linear-gradient(135deg,#3ec6f4,#6246fc);box-shadow:0 0 15px rgba(72,109,241,.14);}
+.guide-art .icon{width:18px;height:18px;}
+.guide-copy {min-width:0;}
+.guide-kicker{color:#a99cc5;font-size:10px;margin:0 0 4px;}
+.new-pill{display:inline-block;color:white;background:#e546b4;padding:2px 4px;border-radius:3px;font-size:8px;font-weight:850;margin-right:4px;}
+.guide-copy h2{margin:0;color:#f5ebff;font-size:12.6px;font-weight:800;line-height:1.3;letter-spacing:-.018em;}
+.guide-copy p{margin:5px 0 0;color:#aaa0c3;font-size:10.7px;line-height:1.45;}
+.guide-link {grid-column:1/-1;display:flex;align-items:center;justify-content:center;gap:7px;
+  border:0;border-radius:10px;background:linear-gradient(95deg,#3287ff,#8052ff);
+  color:#fff;min-height:39px;font-size:11.5px;font-weight:760;cursor:pointer;}
+.guide-link .icon {width:14px;height:14px;}
+button:not(:disabled):active{transform:scale(.992);}
+.payment-panel button:hover,.guide-link:hover {filter:brightness(1.09);}
+/* Laptop/desktops: still show the mobile designs at real phone width. */
+@media(min-width:700px){
+  .all-plans-showcase {padding-top:46px;}
+  .plan-preview {margin-bottom:46px;}
+}
+@media(max-width:360px){
+  .all-plans-showcase{padding:18px 8px 46px;}
+  .preview-content{padding:11px 9px;}
+  .plan-tabs{gap:5px;}
+  .plan-tab{padding:9px 6px 7px;min-height:99px;}
+  .plan-tab .identity{margin-left:25px;}
+  .plan-tab .plan-name{font-size:9.7px;}
+  .plan-tab .plan-coins{font-size:8px;}
+  .plan-cost b{font-size:18px;}
+  .plan-cost small{font-size:8px;}
+  .comparison-table .feature-col{width:43%;}
+  .comparison-table .tier-col{width:19%;}
+  .comparison-table tbody .feature-name{padding-left:8px;font-size:12.4px;}
+  .comparison-table tbody .feature-value{font-size:10.1px;}
+  .tier-head .tier-title{font-size:9px;}
+  .metric{gap:5px;}
+  .metric-icon{width:21px;height:21px;flex-basis:21px;}
+  .metric-label b{font-size:17px;}
+}
+
+/* Three top tabs use a balanced vertical mobile treatment. */
+.plan-tab {min-height:119px;align-items:center;text-align:center;padding:11px 4px 8px;}
+.plan-tab .plan-icon {position:static;width:23px;height:23px;flex:0 0 23px;margin:0 auto 7px;}
+.plan-tab .identity {margin:0;min-height:auto;align-items:center;justify-content:center;gap:4px;}
+.plan-tab .plan-name {font-size:11px;line-height:1.05;white-space:nowrap;}
+.plan-tab .plan-coins {font-size:9.3px;white-space:nowrap;}
+.plan-tab .plan-cost {width:100%;margin-top:auto;padding-top:7px;display:flex;align-items:center;flex-direction:column;gap:4px;}
+.plan-tab .plan-cost b {font-size:20px;}
+.plan-tab .plan-cost small {font-size:9px;}
+@media(max-width:360px){
+  .plan-tab {min-height:119px;padding:10px 2px 7px;}
+  .plan-tab .identity {margin:0;}
+  .plan-tab .plan-name {font-size:9.8px;}
+  .plan-tab .plan-coins {font-size:8.8px;}
+  .plan-tab .plan-cost b {font-size:19px;}
+  .plan-tab .plan-cost small {font-size:8.5px;}
+}
+
+/* RESPONSIVE SELECTED-PLAN COMPARISON: one legible value column.
+   On phones, each of the three full expanded states shows all 14
+   benefits, preserving the exact membership copy across the page. */
+.mobile-benefits-list {width:100%;border-top:1px solid rgba(178,130,217,.14);}
+.mobile-table-head,.mobile-feature-row {display:grid;grid-template-columns:minmax(0,64%) minmax(0,36%);align-items:stretch;}
+.mobile-table-head {min-height:46px;background:#201431;}
+.mobile-head-name {display:flex;align-items:center;padding:10px 14px;text-transform:uppercase;color:#baa4cf;
+    font-size:11px;letter-spacing:.065em;font-weight:790;}
+.mobile-head-plan {display:flex;align-items:center;justify-content:center;gap:6px;padding:9px 6px;
+    font-size:12px;font-weight:770;color:#faf1fc;border-left:1px solid rgba(218,145,219,.15);
+    background:linear-gradient(90deg,rgba(236,74,169,.18),rgba(162,61,192,.20));}
+.preview-annual .mobile-head-plan{color:#ffefd3;background:linear-gradient(90deg,rgba(240,184,54,.16),rgba(182,104,121,.13));}
+.mobile-head-plan .tier-mini-icon{flex:0 0 20px;width:20px;height:20px;border-radius:7px;}
+.mobile-feature-row {min-height:51px;border-top:1px solid rgba(177,131,206,.115);}
+.mobile-feature-row.is-odd {background:rgba(255,255,255,.012);}
+.mobile-feature-name {display:flex;align-items:center;padding:12px 14px;color:#eae0f3;
+    font-size:15px;font-weight:620;letter-spacing:-.014em;line-height:1.3;}
+.mobile-feature-value {display:flex;align-items:center;justify-content:center;text-align:center;
+    min-width:0;padding:10px 9px;border-left:1px solid rgba(215,127,210,.11);
+    background:linear-gradient(90deg,rgba(236,74,169,.12),rgba(162,61,192,.17));
+    color:#f8efff;font-size:12.3px;font-weight:750;line-height:1.32;overflow-wrap:normal;}
+.preview-annual .mobile-feature-value{color:#fff0df;background:linear-gradient(90deg,rgba(240,184,54,.095),rgba(182,104,121,.12));}
+.mobile-feature-row.is-locked .mobile-feature-name {color:#8f819f;}
+.mobile-feature-row.is-locked .mobile-feature-value {opacity:.57;}
+.mobile-feature-value .comparison-value {display:inline-block;max-width:100%;}
+.mobile-feature-value .status-mark {width:22px;height:22px;display:inline-grid;place-items:center;}
+.mobile-feature-value .status-mark .icon {width:21px;height:21px;stroke-width:2.5;}
+.mobile-feature-value .status-mark.included {color:#f9d5f9;}
+.mobile-feature-value .status-mark.unavailable {color:#b09bb8;}
+@media(max-width:360px) {
+  .mobile-feature-name {font-size:14.3px;padding:11px 11px;}
+  .mobile-feature-value {font-size:11.7px;padding:9px 8px;}
+  .mobile-head-name{padding-left:11px;}
+  .mobile-head-plan {font-size:10.3px;gap:4px;white-space:nowrap;}
+  .mobile-head-plan .tier-mini-icon{width:17px;height:17px;flex-basis:17px;}
+}
+.demo-toast {position:fixed;z-index:100;bottom:20px;left:50%;width:max-content;max-width:calc(100% - 32px);transform:translateX(-50%);padding:13px 16px;border:1px solid rgba(230,130,248,.34);border-radius:12px;background:#241337;color:#fff;font:650 12px/1.4 Inter,system-ui,sans-serif;box-shadow:0 16px 44px rgba(0,0,0,.46);text-align:center;}
+.demo-toast[hidden] {display:none;}
+@media(prefers-reduced-motion:reduce){*{scroll-behavior:auto !important;transition:none !important;}}
+</style>
+</head>
+<body>
+  <svg aria-hidden="true" focusable="false" height="0" style="position:absolute;overflow:hidden" width="0">
+<defs>
+<symbol id="ic-user" viewbox="0 0 24 24"><circle cx="12" cy="8" r="3.3"></circle><path d="M5.8 20v-2.2a6.2 6.2 0 0 1 12.4 0V20"></path></symbol>
+<symbol id="ic-close" viewbox="0 0 24 24"><path d="m6 6 12 12M18 6 6 18"></path></symbol>
+<symbol id="ic-sparkle" viewbox="0 0 24 24"><path d="m12 2 1.7 6.3L20 10l-6.3 1.7L12 18l-1.7-6.3L4 10l6.3-1.7L12 2ZM19 16l.6 2.4L22 19l-2.4.6L19 22l-.6-2.4L16 19l2.4-.6L19 16ZM4.5 2l.5 2 2 .5-2 .5-.5 2-.5-2L2 4.5 4 4l.5-2Z"></path></symbol>
+<symbol id="ic-flash" viewbox="0 0 24 24"><path d="m13.5 2-9 11h7l-1 9 9-12h-7l1-8Z"></path></symbol>
+<symbol id="ic-flame" viewbox="0 0 24 24"><path d="M12 22a7 7 0 0 0 7-7c0-3.2-1.7-5.5-4-7-1 3-2 4-3 4-1-2-1.5-5-1-9-3 3-6 6.5-6 12a7 7 0 0 0 7 7Z"></path><path d="M10 18c0 1.4 1 2.5 2.2 2.5 1.7 0 2.8-1.4 2.8-3"></path></symbol>
+<symbol id="ic-crown" viewbox="0 0 24 24"><path d="m2.5 7 4.9 4.4L12 5l4.6 6.4L21.5 7l-2 11h-15l-2-11ZM5 21h14"></path></symbol>
+<symbol id="ic-check" viewbox="0 0 24 24"><path d="m5 12 4 4 10-10"></path></symbol>
+<symbol id="ic-lock" viewbox="0 0 24 24"><rect height="11" rx="2" width="14" x="5" y="10"></rect><path d="M8 10V7a4 4 0 0 1 8 0v3"></path></symbol>
+<symbol id="ic-cube" viewbox="0 0 24 24"><path d="m12 2 9 5v10l-9 5-9-5V7l9-5ZM3.5 7.5 12 12l8.5-4.5M12 12v10"></path></symbol>
+<symbol id="ic-hd" viewbox="0 0 24 24"><rect height="14" rx="3" width="18" x="3" y="5"></rect><rect height="6" rx="1" width="12" x="6" y="9"></rect><path d="M9 10v4m-2-2h4m2-2v4m0-4h1.5c2.2 0 2.2 4 0 4H13"></path></symbol>
+<symbol id="ic-copy" viewbox="0 0 24 24"><rect height="13" rx="2" width="13" x="8" y="8"></rect><path d="M16 8V5a2 2 0 0 0-2-2H5a2 2 0 0 0-2 2v9a2 2 0 0 0 2 2h3"></path></symbol>
+<symbol id="ic-chip" viewbox="0 0 24 24"><rect height="12" rx="2" width="12" x="6" y="6"></rect><rect height="6" rx="1" width="6" x="9" y="9"></rect><path d="M9 2v4m6-4v4M9 18v4m6-4v4M2 9h4m-4 6h4m12-6h4m-4 6h4"></path></symbol>
+<symbol id="ic-face" viewbox="0 0 24 24"><path d="M8 3H5a2 2 0 0 0-2 2v3m13-5h3a2 2 0 0 1 2 2v3M3 16v3a2 2 0 0 0 2 2h3m13-5v3a2 2 0 0 1-2 2h-3"></path><path d="M9 13a3 3 0 0 0 6 0M9 10h.01M15 10h.01"></path></symbol>
+<symbol id="ic-upload" viewbox="0 0 24 24"><path d="M12 15V3m0 0L7.5 7.5M12 3l4.5 4.5M4 15v4a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2v-4"></path></symbol>
+<symbol id="ic-sound" viewbox="0 0 24 24"><path d="m4 9 4-0.1L13 5v14l-5-4H4V9ZM17 9a5 5 0 0 1 0 6m2-9a9 9 0 0 1 0 12"></path></symbol>
+<symbol id="ic-shield" viewbox="0 0 24 24"><path d="m12 2 8 4v6c0 5.1-3.2 8.3-8 10-4.8-1.7-8-4.9-8-10V6l8-4Z"></path></symbol>
+<symbol id="ic-time" viewbox="0 0 24 24"><circle cx="12" cy="12" r="9"></circle><path d="M12 6v6l4 3"></path></symbol>
+<symbol id="ic-story" viewbox="0 0 24 24"><circle cx="6" cy="18" r="2"></circle><circle cx="18" cy="5" r="2"></circle><circle cx="18" cy="16" r="2"></circle><path d="M8 18c6 0 4-13 8-13M8 18c4 0 4-2 8-2"></path></symbol>
+<symbol id="ic-film" viewbox="0 0 24 24"><rect height="16" rx="2" width="16" x="4" y="4"></rect><path d="M8 4v16m8-16v16M4 9h4m8 0h4M4 15h4m8 0h4"></path></symbol>
+<symbol id="ic-speed" viewbox="0 0 24 24"><path d="M4.6 18a9 9 0 1 1 14.8 0M12 13l4.5-4.5M9 18h6"></path><circle cx="12" cy="13" r="1.3"></circle></symbol>
+<symbol id="ic-image" viewbox="0 0 24 24"><rect height="18" rx="3" width="18" x="3" y="3"></rect><circle cx="9" cy="9" r="1.5"></circle><path d="m4 18 5-5 4 3 3-5 4 6"></path></symbol>
+<symbol id="ic-video" viewbox="0 0 24 24"><rect height="14" rx="4" width="18" x="3" y="5"></rect><path d="m10 9 5 3-5 3V9Z"></path></symbol>
+<symbol id="ic-forward" viewbox="0 0 24 24"><path d="M4 12h16m-6-6 6 6-6 6"></path></symbol>
+<symbol id="ic-plane" viewbox="0 0 24 24"><path d="m21 3-6.8 18-3.8-7.4L3 10 21 3ZM10.4 13.6 21 3"></path></symbol>
+<symbol id="ic-secure" viewbox="0 0 24 24"><rect height="11" rx="2" width="14" x="5" y="10"></rect><path d="M8 10V7a4 4 0 0 1 8 0v3"></path></symbol>
+<symbol id="ic-bitcoin" viewbox="0 0 24 24"><path d="M9 3v18m5-18v18M6 6h9a3 3 0 0 1 0 6H8m-2 0h10a3 3 0 0 1 0 6H6"></path></symbol>
+</defs>
+</svg>
+  <main class="all-plans-showcase">
+    <div class="page-intro"><header class="modal-header">
+<h1 id="modalTitle-monthly">Choose your <span>plan</span></h1>
+<p class="subtitle" id="modalSubtitle-monthly">Unlock unlimited creativity with the plan that fits you.</p>
+<div class="trust-row">
+<div aria-hidden="true" class="avatars"><span class="avatar"><svg class="icon"><use href="#ic-user"></use></svg></span><span class="avatar"><svg class="icon"><use href="#ic-user"></use></svg></span><span class="avatar"><svg class="icon"><use href="#ic-user"></use></svg></span><span class="avatar"><svg class="icon"><use href="#ic-user"></use></svg></span></div>
+<div class="trust-copy"><div>Trusted by <strong>1M+</strong> creators worldwide</div><div class="rating-line"><span aria-hidden="true" class="stars">★★★★★</span><strong>1000+</strong> ratings</div></div>
+</div>
+</header></div>
+    <article class="plan-preview preview-monthly" data-preview="monthly" aria-label="Monthly Pro pricing preview">
+      <div class="preview-content">
+        <nav aria-label="Subscription plan selection shown in this preview" class="plan-tabs">
+<div aria-selected="true" class="plan-tab" data-current="true" data-plan="monthly" role="presentation">
+<span class="plan-icon"><svg class="icon"><use href="#ic-flash"></use></svg></span>
+<span class="identity"><span class="plan-name">Monthly Pro</span><span class="plan-coins"><span class="small-coin">$</span>300 coins</span></span>
+<span class="plan-cost"><b>$4.33</b><small>/ 100 coins</small></span>
+</div>
+<div aria-selected="false" class="plan-tab" data-plan="quarterly" role="presentation">
+<span class="plan-icon"><svg class="icon"><use href="#ic-flame"></use></svg></span>
+<span class="identity"><span class="plan-name">Quarterly Pro</span><span class="plan-coins"><span class="small-coin">$</span>1,500 coins</span></span>
+<span class="plan-cost"><b>$2.67</b><small>/ 100 coins</small></span>
+</div>
+<div aria-selected="false" class="plan-tab" data-plan="annual" role="presentation">
+<span class="best-value"><svg class="icon"><use href="#ic-crown"></use></svg>Best value</span>
+<span class="plan-icon"><svg class="icon"><use href="#ic-crown"></use></svg></span>
+<span class="identity"><span class="plan-name">Annual Pro</span><span class="plan-coins"><span class="small-coin">$</span>5,200 coins</span></span>
+<span class="plan-cost"><b>$1.35</b><small>/ 100 coins</small></span>
+</div>
+</nav>
+        <div class="plan-main">
+          <div class="summary-row">
+<div class="price-panel">
+<div class="headline-price"><strong>$4.33</strong><span>/ 100 coins</span></div>
+<p class="billing">$12.99 per month - Billed monthly</p>
+</div>
+<div aria-label="Plan usage credits" class="metrics-panel">
+<div class="metric"><span aria-hidden="true" class="metric-icon coin">$</span><span class="metric-label"><b>300</b><small>Coins</small></span></div>
+<div class="metric"><span class="metric-icon video"><svg class="icon"><use href="#ic-video"></use></svg></span><span class="metric-label"><b>7</b><small>Videos</small></span></div>
+<div class="metric"><span class="metric-icon picture"><svg class="icon"><use href="#ic-image"></use></svg></span><span class="metric-label"><b>23</b><small>Images</small></span></div>
+</div>
+</div>
+          <section aria-labelledby="benefitSectionHeading-monthly-mobile" class="benefits-panel comparison-benefits">
+<div class="benefit-heading"><strong id="benefitSectionHeading-monthly-mobile">In Monthly Pro</strong><span class="count"><strong>6</strong> of 14 benefits</span></div>
+<div aria-hidden="true" class="progress-track"><span class="on"></span><span class="on"></span><span class="on"></span><span class="on"></span><span class="on"></span><span class="on"></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></div>
+<div aria-label="Monthly Pro membership benefits" class="mobile-benefits-list" role="table"><div class="mobile-table-head" role="row"><span class="mobile-head-name" role="columnheader">BENEFITS</span><span class="mobile-head-plan" role="columnheader"><span class="tier-mini-icon icon-0"><svg aria-hidden="true" class="icon"><use href="#ic-flash"></use></svg></span><span>Monthly Pro</span></span></div><div class="mobile-feature-row" role="row"><div class="mobile-feature-name" role="rowheader">Generate videos with custom prompts</div><div class="mobile-feature-value" role="cell"><span aria-label="Included" class="status-mark included" title="Included"><svg aria-hidden="true" class="icon"><use href="#ic-check"></use></svg></span></div></div><div class="mobile-feature-row is-odd" role="row"><div class="mobile-feature-name" role="rowheader">Video quality up to</div><div class="mobile-feature-value" role="cell"><span class="comparison-value">720p HD</span></div></div><div class="mobile-feature-row" role="row"><div class="mobile-feature-name" role="rowheader">Generate tasks simultaneously</div><div class="mobile-feature-value" role="cell"><span class="comparison-value">2 tasks</span></div></div><div class="mobile-feature-row is-odd" role="row"><div class="mobile-feature-name" role="rowheader">Processing</div><div class="mobile-feature-value" role="cell"><span class="comparison-value">Standard processing</span></div></div><div class="mobile-feature-row" role="row"><div class="mobile-feature-name" role="rowheader">Image face swap</div><div class="mobile-feature-value" role="cell"><span aria-label="Included" class="status-mark included" title="Included"><svg aria-hidden="true" class="icon"><use href="#ic-check"></use></svg></span></div></div><div class="mobile-feature-row is-odd" role="row"><div class="mobile-feature-name" role="rowheader">Train your own AI model</div><div class="mobile-feature-value" role="cell"><span aria-label="Included" class="status-mark included" title="Included"><svg aria-hidden="true" class="icon"><use href="#ic-check"></use></svg></span></div></div><div class="mobile-feature-row is-locked" role="row"><div class="mobile-feature-name" role="rowheader">Upload face or pose references</div><div class="mobile-feature-value" role="cell"><span aria-label="Not included" class="status-mark unavailable" title="Not included"><svg aria-hidden="true" class="icon"><use href="#ic-close"></use></svg></span></div></div><div class="mobile-feature-row is-locked is-odd" role="row"><div class="mobile-feature-name" role="rowheader">Generate videos with sound</div><div class="mobile-feature-value" role="cell"><span aria-label="Not included" class="status-mark unavailable" title="Not included"><svg aria-hidden="true" class="icon"><use href="#ic-close"></use></svg></span></div></div><div class="mobile-feature-row is-locked" role="row"><div class="mobile-feature-name" role="rowheader">Video compilation generation</div><div class="mobile-feature-value" role="cell"><span aria-label="Not included" class="status-mark unavailable" title="Not included"><svg aria-hidden="true" class="icon"><use href="#ic-close"></use></svg></span></div></div><div class="mobile-feature-row is-locked is-odd" role="row"><div class="mobile-feature-name" role="rowheader">Video generation up to 60 FPS</div><div class="mobile-feature-value" role="cell"><span aria-label="Not included" class="status-mark unavailable" title="Not included"><svg aria-hidden="true" class="icon"><use href="#ic-close"></use></svg></span></div></div><div class="mobile-feature-row is-locked" role="row"><div class="mobile-feature-name" role="rowheader">Enhanced adult content generation</div><div class="mobile-feature-value" role="cell"><span aria-label="Not included" class="status-mark unavailable" title="Not included"><svg aria-hidden="true" class="icon"><use href="#ic-close"></use></svg></span></div></div><div class="mobile-feature-row is-locked is-odd" role="row"><div class="mobile-feature-name" role="rowheader">Exclusive templates</div><div class="mobile-feature-value" role="cell"><span aria-label="Not included" class="status-mark unavailable" title="Not included"><svg aria-hidden="true" class="icon"><use href="#ic-close"></use></svg></span></div></div><div class="mobile-feature-row is-locked" role="row"><div class="mobile-feature-name" role="rowheader">Early access to new templates</div><div class="mobile-feature-value" role="cell"><span aria-label="Not included" class="status-mark unavailable" title="Not included"><svg aria-hidden="true" class="icon"><use href="#ic-close"></use></svg></span></div></div><div class="mobile-feature-row is-locked is-odd" role="row"><div class="mobile-feature-name" role="rowheader">Storyline branching</div><div class="mobile-feature-value" role="cell"><span aria-label="Not included" class="status-mark unavailable" title="Not included"><svg aria-hidden="true" class="icon"><use href="#ic-close"></use></svg></span></div></div></div><div class="comparison-upgrade"><svg aria-hidden="true" class="icon"><use href="#ic-crown"></use></svg><span>8 more with Quarterly and Annual</span></div></section>
+          <section aria-label="Payment options" class="payment-panel">
+<button class="primary-pay" data-demo="card" type="button">Pay with card <span class="price-pill">$12.99</span><span class="pay-arrow"><svg class="icon"><use href="#ic-forward"></use></svg></span></button>
+<div class="alternative-pays">
+<button data-demo="Telegram" type="button"><svg class="icon telegram-icon"><use href="#ic-plane"></use></svg>Pay with Telegram</button>
+<button class="crypto" data-demo="crypto" type="button"><svg class="icon bitcoin-icon"><use href="#ic-bitcoin"></use></svg>Pay with crypto</button>
+</div>
+<div class="secured"><svg class="icon"><use href="#ic-secure"></use></svg>Secure payment <span class="payment-brand">VISA</span><span class="payment-brand mastercard">●<span class="second-circle">●</span></span><span class="payment-brand apple">● Pay</span><span class="payment-brand paypal">PayPal</span></div>
+</section>
+          <aside aria-labelledby="telegramGuideHeading-monthly-mobile" class="telegram-guide">
+<div class="guide-art"><svg class="icon"><use href="#ic-plane"></use></svg></div>
+<div class="guide-copy"><div class="guide-kicker"><span class="new-pill">New</span> Prefer to pay with Telegram?</div><h2 id="telegramGuideHeading-monthly-mobile">How to Purchase Coins via Telegram</h2><p>Follow our step-by-step guide to complete your payment and unlock more AI creations instantly.</p></div>
+<button class="guide-link" data-demo="guide" type="button">Read the guide <svg class="icon"><use href="#ic-forward"></use></svg></button>
+</aside>
+        </div>
+      </div>
+    </article><article class="plan-preview preview-quarterly" data-preview="quarterly" aria-label="Quarterly Pro pricing preview">
+      <div class="preview-content">
+        <nav aria-label="Subscription plan selection shown in this preview" class="plan-tabs">
+<div aria-selected="false" class="plan-tab" data-plan="monthly" role="presentation">
+<span class="plan-icon"><svg class="icon"><use href="#ic-flash"></use></svg></span>
+<span class="identity"><span class="plan-name">Monthly Pro</span><span class="plan-coins"><span class="small-coin">$</span>300 coins</span></span>
+<span class="plan-cost"><b>$4.33</b><small>/ 100 coins</small></span>
+</div>
+<div aria-selected="true" class="plan-tab" data-current="true" data-plan="quarterly" role="presentation">
+<span class="plan-icon"><svg class="icon"><use href="#ic-flame"></use></svg></span>
+<span class="identity"><span class="plan-name">Quarterly Pro</span><span class="plan-coins"><span class="small-coin">$</span>1,500 coins</span></span>
+<span class="plan-cost"><b>$2.67</b><small>/ 100 coins</small></span>
+</div>
+<div aria-selected="false" class="plan-tab" data-plan="annual" role="presentation">
+<span class="best-value"><svg class="icon"><use href="#ic-crown"></use></svg>Best value</span>
+<span class="plan-icon"><svg class="icon"><use href="#ic-crown"></use></svg></span>
+<span class="identity"><span class="plan-name">Annual Pro</span><span class="plan-coins"><span class="small-coin">$</span>5,200 coins</span></span>
+<span class="plan-cost"><b>$1.35</b><small>/ 100 coins</small></span>
+</div>
+</nav>
+        <div class="plan-main">
+          <div class="summary-row">
+<div class="price-panel">
+<div class="headline-price"><strong>$2.67</strong><span>/ 100 coins</span></div>
+<p class="billing">$12.99 per month - Billed monthly</p>
+</div>
+<div aria-label="Plan usage credits" class="metrics-panel">
+<div class="metric"><span aria-hidden="true" class="metric-icon coin">$</span><span class="metric-label"><b>1500</b><small>Coins</small></span></div>
+<div class="metric"><span class="metric-icon video"><svg class="icon"><use href="#ic-video"></use></svg></span><span class="metric-label"><b>30</b><small>Videos</small></span></div>
+<div class="metric"><span class="metric-icon picture"><svg class="icon"><use href="#ic-image"></use></svg></span><span class="metric-label"><b>100</b><small>Images</small></span></div>
+</div>
+</div>
+          <section aria-labelledby="benefitSectionHeading-quarterly-mobile" class="benefits-panel comparison-benefits">
+<div class="benefit-heading"><strong id="benefitSectionHeading-quarterly-mobile">In Quarterly Pro</strong><span class="count"><strong>9</strong> of 14 benefits</span></div>
+<div aria-hidden="true" class="progress-track"><span class="on"></span><span class="on"></span><span class="on"></span><span class="on"></span><span class="on"></span><span class="on"></span><span class="on"></span><span class="on"></span><span class="on"></span><span></span><span></span><span></span><span></span><span></span></div>
+<div aria-label="Quarterly Pro membership benefits" class="mobile-benefits-list" role="table"><div class="mobile-table-head" role="row"><span class="mobile-head-name" role="columnheader">BENEFITS</span><span class="mobile-head-plan" role="columnheader"><span class="tier-mini-icon icon-1"><svg aria-hidden="true" class="icon"><use href="#ic-flame"></use></svg></span><span>Quarterly Pro</span></span></div><div class="mobile-feature-row" role="row"><div class="mobile-feature-name" role="rowheader">Generate videos with custom prompts</div><div class="mobile-feature-value" role="cell"><span aria-label="Included" class="status-mark included" title="Included"><svg aria-hidden="true" class="icon"><use href="#ic-check"></use></svg></span></div></div><div class="mobile-feature-row is-odd" role="row"><div class="mobile-feature-name" role="rowheader">Video quality up to</div><div class="mobile-feature-value" role="cell"><span class="comparison-value">1080p Full HD</span></div></div><div class="mobile-feature-row" role="row"><div class="mobile-feature-name" role="rowheader">Generate tasks simultaneously</div><div class="mobile-feature-value" role="cell"><span class="comparison-value">5 tasks</span></div></div><div class="mobile-feature-row is-odd" role="row"><div class="mobile-feature-name" role="rowheader">Processing</div><div class="mobile-feature-value" role="cell"><span class="comparison-value">Priority processing</span></div></div><div class="mobile-feature-row" role="row"><div class="mobile-feature-name" role="rowheader">Image face swap</div><div class="mobile-feature-value" role="cell"><span aria-label="Included" class="status-mark included" title="Included"><svg aria-hidden="true" class="icon"><use href="#ic-check"></use></svg></span></div></div><div class="mobile-feature-row is-odd" role="row"><div class="mobile-feature-name" role="rowheader">Train your own AI model</div><div class="mobile-feature-value" role="cell"><span aria-label="Included" class="status-mark included" title="Included"><svg aria-hidden="true" class="icon"><use href="#ic-check"></use></svg></span></div></div><div class="mobile-feature-row" role="row"><div class="mobile-feature-name" role="rowheader">Upload face or pose references</div><div class="mobile-feature-value" role="cell"><span aria-label="Included" class="status-mark included" title="Included"><svg aria-hidden="true" class="icon"><use href="#ic-check"></use></svg></span></div></div><div class="mobile-feature-row is-odd" role="row"><div class="mobile-feature-name" role="rowheader">Generate videos with sound</div><div class="mobile-feature-value" role="cell"><span aria-label="Included" class="status-mark included" title="Included"><svg aria-hidden="true" class="icon"><use href="#ic-check"></use></svg></span></div></div><div class="mobile-feature-row" role="row"><div class="mobile-feature-name" role="rowheader">Video compilation generation</div><div class="mobile-feature-value" role="cell"><span aria-label="Included" class="status-mark included" title="Included"><svg aria-hidden="true" class="icon"><use href="#ic-check"></use></svg></span></div></div><div class="mobile-feature-row is-locked is-odd" role="row"><div class="mobile-feature-name" role="rowheader">Video generation up to 60 FPS</div><div class="mobile-feature-value" role="cell"><span aria-label="Not included" class="status-mark unavailable" title="Not included"><svg aria-hidden="true" class="icon"><use href="#ic-close"></use></svg></span></div></div><div class="mobile-feature-row is-locked" role="row"><div class="mobile-feature-name" role="rowheader">Enhanced adult content generation</div><div class="mobile-feature-value" role="cell"><span aria-label="Not included" class="status-mark unavailable" title="Not included"><svg aria-hidden="true" class="icon"><use href="#ic-close"></use></svg></span></div></div><div class="mobile-feature-row is-locked is-odd" role="row"><div class="mobile-feature-name" role="rowheader">Exclusive templates</div><div class="mobile-feature-value" role="cell"><span aria-label="Not included" class="status-mark unavailable" title="Not included"><svg aria-hidden="true" class="icon"><use href="#ic-close"></use></svg></span></div></div><div class="mobile-feature-row is-locked" role="row"><div class="mobile-feature-name" role="rowheader">Early access to new templates</div><div class="mobile-feature-value" role="cell"><span aria-label="Not included" class="status-mark unavailable" title="Not included"><svg aria-hidden="true" class="icon"><use href="#ic-close"></use></svg></span></div></div><div class="mobile-feature-row is-locked is-odd" role="row"><div class="mobile-feature-name" role="rowheader">Storyline branching</div><div class="mobile-feature-value" role="cell"><span aria-label="Not included" class="status-mark unavailable" title="Not included"><svg aria-hidden="true" class="icon"><use href="#ic-close"></use></svg></span></div></div></div><div class="comparison-upgrade"><svg aria-hidden="true" class="icon"><use href="#ic-crown"></use></svg><span>5 more with Annual</span></div></section>
+          <section aria-label="Payment options" class="payment-panel">
+<button class="primary-pay" data-demo="card" type="button">Pay with card <span class="price-pill">$12.99</span><span class="pay-arrow"><svg class="icon"><use href="#ic-forward"></use></svg></span></button>
+<div class="alternative-pays">
+<button data-demo="Telegram" type="button"><svg class="icon telegram-icon"><use href="#ic-plane"></use></svg>Pay with Telegram</button>
+<button class="crypto" data-demo="crypto" type="button"><svg class="icon bitcoin-icon"><use href="#ic-bitcoin"></use></svg>Pay with crypto</button>
+</div>
+<div class="secured"><svg class="icon"><use href="#ic-secure"></use></svg>Secure payment <span class="payment-brand">VISA</span><span class="payment-brand mastercard">●<span class="second-circle">●</span></span><span class="payment-brand apple">● Pay</span><span class="payment-brand paypal">PayPal</span></div>
+</section>
+          <aside aria-labelledby="telegramGuideHeading-quarterly-mobile" class="telegram-guide">
+<div class="guide-art"><svg class="icon"><use href="#ic-plane"></use></svg></div>
+<div class="guide-copy"><div class="guide-kicker"><span class="new-pill">New</span> Prefer to pay with Telegram?</div><h2 id="telegramGuideHeading-quarterly-mobile">How to Purchase Coins via Telegram</h2><p>Follow our step-by-step guide to complete your payment and unlock more AI creations instantly.</p></div>
+<button class="guide-link" data-demo="guide" type="button">Read the guide <svg class="icon"><use href="#ic-forward"></use></svg></button>
+</aside>
+        </div>
+      </div>
+    </article><article class="plan-preview preview-annual" data-preview="annual" aria-label="Annual Pro pricing preview">
+      <div class="preview-content">
+        <nav aria-label="Subscription plan selection shown in this preview" class="plan-tabs">
+<div aria-selected="false" class="plan-tab" data-plan="monthly" role="presentation">
+<span class="plan-icon"><svg class="icon"><use href="#ic-flash"></use></svg></span>
+<span class="identity"><span class="plan-name">Monthly Pro</span><span class="plan-coins"><span class="small-coin">$</span>300 coins</span></span>
+<span class="plan-cost"><b>$4.33</b><small>/ 100 coins</small></span>
+</div>
+<div aria-selected="false" class="plan-tab" data-plan="quarterly" role="presentation">
+<span class="plan-icon"><svg class="icon"><use href="#ic-flame"></use></svg></span>
+<span class="identity"><span class="plan-name">Quarterly Pro</span><span class="plan-coins"><span class="small-coin">$</span>1,500 coins</span></span>
+<span class="plan-cost"><b>$2.67</b><small>/ 100 coins</small></span>
+</div>
+<div aria-selected="true" class="plan-tab" data-current="true" data-plan="annual" role="presentation">
+<span class="best-value"><svg class="icon"><use href="#ic-crown"></use></svg>Best value</span>
+<span class="plan-icon"><svg class="icon"><use href="#ic-crown"></use></svg></span>
+<span class="identity"><span class="plan-name">Annual Pro</span><span class="plan-coins"><span class="small-coin">$</span>5,200 coins</span></span>
+<span class="plan-cost"><b>$1.35</b><small>/ 100 coins</small></span>
+</div>
+</nav>
+        <div class="plan-main">
+          <div class="summary-row">
+<div class="price-panel">
+<div class="headline-price"><strong>$1.35</strong><span>/ 100 coins</span></div>
+<p class="billing">$12.99 per month - Billed monthly</p>
+</div>
+<div aria-label="Plan usage credits" class="metrics-panel">
+<div class="metric"><span aria-hidden="true" class="metric-icon coin">$</span><span class="metric-label"><b>5200</b><small>Coins</small></span></div>
+<div class="metric"><span class="metric-icon video"><svg class="icon"><use href="#ic-video"></use></svg></span><span class="metric-label"><b>100</b><small>Videos</small></span></div>
+<div class="metric"><span class="metric-icon picture"><svg class="icon"><use href="#ic-image"></use></svg></span><span class="metric-label"><b>400</b><small>Images</small></span></div>
+</div>
+</div>
+          <section aria-labelledby="benefitSectionHeading-annual-mobile" class="benefits-panel comparison-benefits">
+<div class="benefit-heading"><strong id="benefitSectionHeading-annual-mobile">In Annual Pro</strong><span class="count"><strong>14</strong> of 14 benefits</span></div>
+<div aria-hidden="true" class="progress-track"><span class="on"></span><span class="on"></span><span class="on"></span><span class="on"></span><span class="on"></span><span class="on"></span><span class="on"></span><span class="on"></span><span class="on"></span><span class="on"></span><span class="on"></span><span class="on"></span><span class="on"></span><span class="on"></span></div>
+<div aria-label="Annual Pro membership benefits" class="mobile-benefits-list" role="table"><div class="mobile-table-head" role="row"><span class="mobile-head-name" role="columnheader">BENEFITS</span><span class="mobile-head-plan" role="columnheader"><span class="tier-mini-icon icon-2"><svg aria-hidden="true" class="icon"><use href="#ic-crown"></use></svg></span><span>Annual Pro</span></span></div><div class="mobile-feature-row" role="row"><div class="mobile-feature-name" role="rowheader">Generate videos with custom prompts</div><div class="mobile-feature-value" role="cell"><span aria-label="Included" class="status-mark included" title="Included"><svg aria-hidden="true" class="icon"><use href="#ic-check"></use></svg></span></div></div><div class="mobile-feature-row is-odd" role="row"><div class="mobile-feature-name" role="rowheader">Video quality up to</div><div class="mobile-feature-value" role="cell"><span class="comparison-value">4K Ultra HD</span></div></div><div class="mobile-feature-row" role="row"><div class="mobile-feature-name" role="rowheader">Generate tasks simultaneously</div><div class="mobile-feature-value" role="cell"><span class="comparison-value">10 tasks</span></div></div><div class="mobile-feature-row is-odd" role="row"><div class="mobile-feature-name" role="rowheader">Processing</div><div class="mobile-feature-value" role="cell"><span class="comparison-value">Highest-priority processing</span></div></div><div class="mobile-feature-row" role="row"><div class="mobile-feature-name" role="rowheader">Image face swap</div><div class="mobile-feature-value" role="cell"><span aria-label="Included" class="status-mark included" title="Included"><svg aria-hidden="true" class="icon"><use href="#ic-check"></use></svg></span></div></div><div class="mobile-feature-row is-odd" role="row"><div class="mobile-feature-name" role="rowheader">Train your own AI model</div><div class="mobile-feature-value" role="cell"><span aria-label="Included" class="status-mark included" title="Included"><svg aria-hidden="true" class="icon"><use href="#ic-check"></use></svg></span></div></div><div class="mobile-feature-row" role="row"><div class="mobile-feature-name" role="rowheader">Upload face or pose references</div><div class="mobile-feature-value" role="cell"><span aria-label="Included" class="status-mark included" title="Included"><svg aria-hidden="true" class="icon"><use href="#ic-check"></use></svg></span></div></div><div class="mobile-feature-row is-odd" role="row"><div class="mobile-feature-name" role="rowheader">Generate videos with sound</div><div class="mobile-feature-value" role="cell"><span aria-label="Included" class="status-mark included" title="Included"><svg aria-hidden="true" class="icon"><use href="#ic-check"></use></svg></span></div></div><div class="mobile-feature-row" role="row"><div class="mobile-feature-name" role="rowheader">Video compilation generation</div><div class="mobile-feature-value" role="cell"><span aria-label="Included" class="status-mark included" title="Included"><svg aria-hidden="true" class="icon"><use href="#ic-check"></use></svg></span></div></div><div class="mobile-feature-row is-odd" role="row"><div class="mobile-feature-name" role="rowheader">Video generation up to 60 FPS</div><div class="mobile-feature-value" role="cell"><span aria-label="Included" class="status-mark included" title="Included"><svg aria-hidden="true" class="icon"><use href="#ic-check"></use></svg></span></div></div><div class="mobile-feature-row" role="row"><div class="mobile-feature-name" role="rowheader">Enhanced adult content generation</div><div class="mobile-feature-value" role="cell"><span aria-label="Included" class="status-mark included" title="Included"><svg aria-hidden="true" class="icon"><use href="#ic-check"></use></svg></span></div></div><div class="mobile-feature-row is-odd" role="row"><div class="mobile-feature-name" role="rowheader">Exclusive templates</div><div class="mobile-feature-value" role="cell"><span aria-label="Included" class="status-mark included" title="Included"><svg aria-hidden="true" class="icon"><use href="#ic-check"></use></svg></span></div></div><div class="mobile-feature-row" role="row"><div class="mobile-feature-name" role="rowheader">Early access to new templates</div><div class="mobile-feature-value" role="cell"><span aria-label="Included" class="status-mark included" title="Included"><svg aria-hidden="true" class="icon"><use href="#ic-check"></use></svg></span></div></div><div class="mobile-feature-row is-odd" role="row"><div class="mobile-feature-name" role="rowheader">Storyline branching</div><div class="mobile-feature-value" role="cell"><span aria-label="Included" class="status-mark included" title="Included"><svg aria-hidden="true" class="icon"><use href="#ic-check"></use></svg></span></div></div></div><div class="comparison-upgrade"><svg aria-hidden="true" class="icon"><use href="#ic-crown"></use></svg><span>Every benefit included</span></div></section>
+          <section aria-label="Payment options" class="payment-panel">
+<button class="primary-pay" data-demo="card" type="button">Pay with card <span class="price-pill">$12.99</span><span class="pay-arrow"><svg class="icon"><use href="#ic-forward"></use></svg></span></button>
+<div class="alternative-pays">
+<button data-demo="Telegram" type="button"><svg class="icon telegram-icon"><use href="#ic-plane"></use></svg>Pay with Telegram</button>
+<button class="crypto" data-demo="crypto" type="button"><svg class="icon bitcoin-icon"><use href="#ic-bitcoin"></use></svg>Pay with crypto</button>
+</div>
+<div class="secured"><svg class="icon"><use href="#ic-secure"></use></svg>Secure payment <span class="payment-brand">VISA</span><span class="payment-brand mastercard">●<span class="second-circle">●</span></span><span class="payment-brand apple">● Pay</span><span class="payment-brand paypal">PayPal</span></div>
+</section>
+          <aside aria-labelledby="telegramGuideHeading-annual-mobile" class="telegram-guide">
+<div class="guide-art"><svg class="icon"><use href="#ic-plane"></use></svg></div>
+<div class="guide-copy"><div class="guide-kicker"><span class="new-pill">New</span> Prefer to pay with Telegram?</div><h2 id="telegramGuideHeading-annual-mobile">How to Purchase Coins via Telegram</h2><p>Follow our step-by-step guide to complete your payment and unlock more AI creations instantly.</p></div>
+<button class="guide-link" data-demo="guide" type="button">Read the guide <svg class="icon"><use href="#ic-forward"></use></svg></button>
+</aside>
+        </div>
+      </div>
+    </article>
+  </main>
+  <div class="demo-toast" role="status" aria-live="polite" hidden></div>
+  <script>
+    // Visual prototype only. Replace with actual payment/guide routes.
+    const toast = document.querySelector('.demo-toast');
+    let hideToast;
+    document.querySelectorAll('button[data-demo]').forEach(function(btn){
+      btn.addEventListener('click',function(){
+        const value = btn.dataset.demo;
+        toast.textContent = value === 'guide' ? 'Demo preview — connect your Telegram guide link.' : 'Demo preview — connect your payment provider.';
+        toast.hidden = false;
+        clearTimeout(hideToast);
+        hideToast = setTimeout(function(){ toast.hidden = true; },3000);
+      });
+    });
+  </script>
+</body></html>
