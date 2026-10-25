@@ -1,0 +1,712 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#191919">
+  <title>Onyx Biolabs — Halloween Sale | All Five Email Wireframes</title>
+  <style>
+    /* Entire showcase lives in this one HTML file. */
+    @import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700;800;900&display=swap');
+    :root {
+      --ink: #161616;
+      --orange: #fc902c;
+      --note: #ffe3c7;
+      --canvas: #f1f1f1;
+      --footer: #eaeaea;
+      --placeholder: #d7d7d7;
+      --email-width: 600px;
+    }
+    *, *::before, *::after { box-sizing: border-box; }
+    html { scroll-behavior: smooth; }
+    body {
+      margin: 0;
+      background: #e5e6e9;
+      color: var(--ink);
+      font-family: 'Montserrat', Arial, Helvetica, sans-serif;
+      -webkit-font-smoothing: antialiased;
+    }
+    .showcase { padding: 45px 20px 105px; }
+    .showcase-heading { max-width: 760px; margin: 0 auto 45px; text-align: center; }
+    .showcase-heading .eyebrow { display:block; letter-spacing: .25em; font-size: 11px; font-weight: 800; color: #686868; text-transform: uppercase; }
+    .showcase-heading h1 { margin: 10px 0 8px; font-size: clamp(26px, 3vw, 36px); font-weight: 900; letter-spacing: -.055em; }
+    .showcase-heading p { margin: 0; color: #656565; font-size: 13px; line-height: 1.6; }
+    .design-stage { margin: 0 auto 83px; width: min(100%, var(--email-width)); }
+    .design-heading { color: #49494d; display: flex; align-items: center; justify-content: space-between; gap: 10px; margin-bottom: 12px; font-size: 11px; letter-spacing: .13em; font-weight: 800; text-transform: uppercase; }
+    .design-heading span:last-child { color: #818186; font-weight: 700; letter-spacing: .06em; }
+    .email {
+      background: white;
+      width: 100%;
+      overflow: hidden;
+      box-shadow: 0 8px 26px rgba(31, 32, 38, .115);
+      isolation: isolate;
+    }
+    .email-meta { padding: 20px 24px 22px; background: #fff; }
+    .meta-group + .meta-group { margin-top: 15px; }
+    .meta-label { display: block; color: #5f5f5f; font-size: 9px; letter-spacing: .17em; font-weight: 800; margin-bottom: 6px; text-transform: uppercase; }
+    .meta-value { margin: 0; font-size: 17px; font-weight: 800; letter-spacing: -.027em; line-height: 1.35; }
+    .meta-preview { margin: 0; font-size: 15px; font-weight: 500; letter-spacing: -.016em; line-height: 1.4; }
+
+    /* Repeated design annotations — part of the reference wireframes. */
+    .annotation {
+      background: var(--note);
+      color: #2c2927;
+      border-radius: 3px;
+      padding: 4px 8px 3px;
+      font-size: 9px;
+      font-weight: 800;
+      line-height: 1.12;
+      letter-spacing: .13em;
+      text-transform: uppercase;
+      display: inline-block;
+      max-width: 100%;
+    }
+    .annotation--orange { background: var(--orange); }
+    .annotation--white { background: #fff; }
+    .text-center { text-align: center; }
+    .section-head { margin: 0 0 22px; text-align: center; }
+    .section-head .annotation { margin-bottom: 12px; }
+    .section-title { margin: 0; font-size: 25px; font-weight: 900; letter-spacing: -.045em; line-height: 1.12; text-transform: uppercase; }
+    .section-copy { color: #242424; font-size: 16px; font-weight: 500; line-height: 1.55; margin: 15px auto 0; max-width: 510px; }
+    .section-light { background: var(--canvas); }
+    .section-white { background: white; }
+
+    /* Dark hero: faint diagonal art-direction guides are deliberate. */
+    .hero {
+      position: relative;
+      height: 800px;
+      padding: 38px 36px 25px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      text-align: center;
+      overflow: hidden;
+      background: #151515;
+      color: #fff;
+    }
+    .guide-lines {
+      pointer-events: none;
+      position: absolute;
+      inset: 0;
+      z-index: 0;
+      background:
+        linear-gradient(52deg, transparent calc(50% - .6px), rgba(225,225,225,.09) 50%, transparent calc(50% + .6px)),
+        linear-gradient(-52deg, transparent calc(50% - .6px), rgba(225,225,225,.09) 50%, transparent calc(50% + .6px));
+    }
+    .hero > :not(.guide-lines):not(.hero-background-note):not(.fold-guide):not(.bottom-wave) { position: relative; z-index: 2; }
+    .hero-background-note { position: absolute; z-index: 4; top: 14px; left: 15px; white-space: nowrap; }
+    .logo-placeholder {
+      width: 153px;
+      height: 37px;
+      border: 1px dashed #626262;
+      display: inline-flex;
+      justify-content: center;
+      align-items: center;
+      color: #d2d2d2;
+      font-size: 11px;
+      font-weight: 800;
+      letter-spacing: .23em;
+      white-space: nowrap;
+    }
+    .hero > .logo-placeholder { flex-shrink: 0; }
+    .hero .headline-tag { margin-top: 32px; }
+    .hero-title {
+      font-size: 57px;
+      line-height: .91;
+      letter-spacing: -.065em;
+      font-weight: 900;
+      margin: 16px 0 0;
+      text-transform: uppercase;
+      max-width: 580px;
+    }
+    .hero .subheadline-tag { margin-top: 23px; }
+    .hero-subtitle { font-size: 17px; line-height: 1.43; font-weight: 500; margin: 13px auto 0; max-width: 470px; letter-spacing: -.018em; }
+    .hero .button-tag { margin-top: 26px; }
+    .orange-button {
+      background: var(--orange);
+      color: #141414;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      min-width: 225px;
+      min-height: 52px;
+      padding: 12px 20px;
+      border-radius: 5px;
+      font-size: 15px;
+      font-weight: 900;
+      line-height: 1.18;
+      letter-spacing: .055em;
+      text-transform: uppercase;
+    }
+    .hero .orange-button { margin-top: 8px; }
+    .code-pill { border: 1px dashed #aaa; border-radius: 50px; padding: 12px 23px; font-size: 14px; font-weight: 800; letter-spacing: .07em; display: inline-block; margin-top: 17px; line-height: 1.3; }
+    .fold-guide { position: absolute; left: 0; width: 100%; z-index: 5; top: 650px; border-top: 1px dashed var(--orange); height: 0; pointer-events: none; }
+    .fold-guide .annotation { position: absolute; top: -24px; right: 0; white-space: nowrap; }
+    .hero .hero-image {
+      flex: 0 0 auto;
+      margin-top: 30px;
+      width: 100%;
+      height: 230px;
+      background: #2c2c2c;
+      border-radius: 13px;
+      border: 1px solid rgba(255,255,255,.045);
+    }
+    .image-placeholder {
+      position: relative;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      overflow: hidden;
+      background: var(--placeholder);
+      border: 1px solid #cecece;
+      border-radius: 10px;
+      isolation: isolate;
+    }
+    .image-placeholder::before,
+    .image-placeholder::after {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(to bottom right, transparent calc(50% - .5px), rgba(95,95,95,.22) 50%, transparent calc(50% + .5px));
+      pointer-events: none;
+    }
+    .image-placeholder::after { transform: scaleX(-1); }
+    .image-placeholder span {
+      position: relative;
+      z-index: 2;
+      background: rgba(255,255,255,.96);
+      color: #2a2a2a;
+      font-weight: 800;
+      letter-spacing: .11em;
+      text-align: center;
+      text-transform: uppercase;
+      line-height: 1.25;
+      padding: 7px 10px;
+      border-radius: 2px;
+      max-width: 91%;
+      font-size: 9px;
+    }
+    .hero-image.image-placeholder {
+      background: #2d2d2d;
+      border-color: #343434;
+    }
+    .hero-image.image-placeholder::before,
+    .hero-image.image-placeholder::after { background: linear-gradient(to bottom right, transparent calc(50% - .5px), rgba(175,175,175,.14) 50%, transparent calc(50% + .5px)); }
+    .hero-image.image-placeholder span { max-width: 84%; font-size: 9px; }
+    .bottom-wave, .top-wave { position: absolute; left: 0; width: 100%; height: 30px; display:block; z-index: 4; }
+    .bottom-wave { bottom: -1px; }
+    .top-wave { top: -1px; }
+
+    /* How to save */
+    .steps-section { padding: 56px 40px 66px; position: relative; }
+    .steps-grid { display: grid; grid-template-columns: repeat(3,minmax(0,1fr)); gap: 14px; margin-top: 23px; }
+    .step-card { text-align: center; background: #fff; border-radius: 13px; padding: 22px 13px 21px; min-height: 183px; }
+    .circle-number { display: flex; justify-content: center; align-items: center; width: 42px; height: 42px; border-radius: 50%; margin: 0 auto 13px; font-size: 16px; font-weight: 900; color: #fff; background: #151515; }
+    .step-card h3 { font-size: 14px; font-weight: 900; line-height: 1.1; margin: 0 0 11px; text-transform: uppercase; letter-spacing: -.032em; }
+    .step-card p { font-size: 14px; line-height: 1.48; color: #363636; font-weight: 500; margin: 0; }
+
+    /* Product cards */
+    .product-section { padding: 55px 40px 42px; }
+    .product-grid { display: grid; grid-template-columns: repeat(3,minmax(0,1fr)); gap: 16px; margin-top: 28px; }
+    .product-card {
+      border-radius: 13px;
+      background: #f0f0f0;
+      text-align: center;
+      padding: 0 12px 16px;
+      position: relative;
+      min-width: 0;
+      display: flex;
+      flex-direction: column;
+      align-items: stretch;
+    }
+    .product-card .product-image {
+      margin: -19px auto 15px;
+      width: min(100%, 146px);
+      aspect-ratio: 1;
+      background: #d6d6d6;
+      flex-shrink: 0;
+    }
+    .product-card .product-image span { white-space: nowrap; font-size: 9px; padding: 7px 8px; }
+    .product-name { font-size: 14px; font-weight: 900; line-height: 1.25; letter-spacing: -.032em; margin: auto 0 12px; text-transform: uppercase; min-height: 17px; }
+    .black-button { color: white; background: #171717; border-radius: 4px; min-height: 48px; padding: 10px 5px; display:flex; justify-content:center; align-items:center; font-size: 13px; font-weight: 900; letter-spacing: .06em; line-height: 1.2; text-transform: uppercase; }
+
+    /* Four-icon trust band */
+    .trust-section { padding: 22px 40px 51px; text-align: center; }
+    .trust-section .inner { border-top: 1px solid #ededed; padding-top: 31px; }
+    .trust-grid { display: grid; grid-template-columns: repeat(4,minmax(0,1fr)); gap: 14px; align-items: start; margin-top: 18px; }
+    .trust-item { text-align: center; display: flex; flex-direction: column; align-items: center; gap: 9px; }
+    .trust-item svg { width: 24px; height: 24px; stroke: #141414; fill: none; stroke-width: 1.8; stroke-linecap: round; stroke-linejoin: round; }
+    .trust-item p { margin: 0; font-size: 10px; font-weight: 900; line-height: 1.15; text-transform: uppercase; letter-spacing: .055em; }
+
+    /* Graphic closing banner */
+    .closing-banner {
+      position: relative;
+      overflow: hidden;
+      color: #fff;
+      background: #151515;
+      text-align: center;
+      padding: 72px 28px 79px;
+      min-height: 348px;
+    }
+    .closing-banner .guide-lines { opacity: .8; }
+    .closing-banner > :not(.guide-lines):not(.top-wave):not(.bottom-wave) { position: relative; z-index: 2; }
+    .closing-banner h2 { font-size: 35px; font-weight: 900; letter-spacing: -.058em; line-height: .98; text-transform: uppercase; margin: 15px 0 15px; }
+    .closing-banner p { font-size: 15.5px; line-height: 1.5; font-weight: 500; max-width: 520px; margin: 0 auto 24px; letter-spacing: -.01em; }
+    .closing-banner .orange-button { min-width: 224px; }
+    .footer { background: var(--footer); padding: 49px 28px 65px; text-align: center; }
+    .footer .logo-placeholder { margin-top: 17px; color: #333; border-color: #b1b1b1; }
+    .social-circles { display:flex; justify-content:center; gap: 12px; margin: 19px auto 15px; }
+    .social-circles span { height:31px; width:31px; display:block; border:1px solid #9a9a9a; border-radius: 50%; }
+    .footer-links { color: #262626; font-size: 12px; line-height: 1.5; margin: 0 auto; font-weight: 500; }
+    .footer-links a, .footer-links .pseudo-link { color: inherit; text-decoration: underline; }
+    .legal-copy { color: #363636; font-size: 11px; line-height: 1.55; font-weight: 500; margin: 17px auto 0; }
+
+    /* Email 2 — research focus */
+    .focus-section { padding: 53px 34px 65px; }
+    .focus-section .section-head { margin-bottom: 19px; }
+    .guidance-label { text-align:center; margin: 18px 0 10px; }
+    .guidance-card { background:#fff; border-radius: 11px; padding: 12px 13px; display:flex; align-items:center; gap:16px; min-height: 103px; }
+    .guidance-card .image-placeholder { width:120px; height:78px; flex:0 0 120px; border-radius:5px; }
+    .guidance-card h3 { font-weight:900; font-size:14px; text-transform:uppercase; margin:0 0 5px; line-height:1.15; letter-spacing:-.025em; }
+    .guidance-card p { font-weight:500; font-size:13px; line-height:1.38; margin:0; }
+    .products-guide-label { text-align: center; margin: 21px 0 10px; }
+    .focus-product-grid { display:grid; grid-template-columns:repeat(2,minmax(0,1fr)); gap:16px; }
+    .focus-product {
+      background:white;
+      min-height: 260px;
+      padding:17px 13px 14px;
+      border-radius:12px;
+      position:relative;
+      text-align:center;
+      display:flex;
+      align-items:stretch;
+      flex-direction:column;
+      justify-content: flex-end;
+      overflow:hidden;
+    }
+    .focus-product .background-product-name { position:absolute; z-index:0; color:#e2e2e2; font-size:37px; font-weight:900; white-space:nowrap; text-transform:uppercase; left:50%; top:53%; transform:translate(-50%,-50%); letter-spacing:-.05em; }
+    .focus-product .product-image { z-index:1; width:118px; height:146px; margin: 0 auto 13px; border-radius:7px; }
+    .focus-product .product-image span { font-size:10px; padding: 7px 9px; }
+    .focus-product .product-name { z-index:1; margin:0 0 10px; font-size:14px; }
+    .focus-product .black-button { position:relative; z-index:1; min-height:42px; }
+    .objections-section { padding: 48px 34px 58px; }
+    .objections-section .section-head { margin-bottom: 23px; }
+    .objection-box { background: #efefef; border-radius:11px; padding:16px 17px; margin-top:12px; }
+    .objection-box h3 { font-weight:900; font-size:13px; line-height:1.25; margin:0 0 6px; text-transform: uppercase; }
+    .objection-box p { font-weight:500; font-size:13px; line-height:1.38; margin:0; }
+
+    /* Email 3 — weekend deadline */
+    .countdown-section { padding: 53px 41px 66px; text-align:center; }
+    .timer-row { display:grid; gap:16px; margin: 23px 0 18px; }
+    .timer-row.four { grid-template-columns: repeat(4,minmax(0,1fr)); }
+    .timer-row.three { grid-template-columns: repeat(3,minmax(0,1fr)); max-width: 415px; margin-left:auto; margin-right:auto; }
+    .timer-box { min-height: 96px; border-radius: 10px; background:#151515; display:flex; flex-direction:column; align-items:center; justify-content:center; }
+    .timer-box strong { color:#fff; font-size:41px; line-height:1.06; letter-spacing:-.06em; font-weight:900; }
+    .timer-box span { font-size:11px; line-height:1.35; margin-top:2px; color:var(--orange); font-weight:900; letter-spacing:.14em; }
+    .timer-note { font-size:15px; font-weight:700; margin: 17px 0 0; }
+    .reason-section { padding: 51px 41px 38px; }
+    .reason-grid { margin-top: 21px; display:flex; flex-direction:column; gap:13px; }
+    .reason { display:flex; align-items:center; gap: 15px; }
+    .reason-number { flex:0 0 39px; height:39px; border-radius:50%; background: var(--orange); display:grid; place-items:center; color:#171717; font-size:17px; font-weight:900; }
+    .reason p { margin:0; font-size:14px; line-height:1.45; font-weight:700; }
+    .email-three .product-section { padding-top: 22px; padding-bottom: 58px; }
+
+    /* Email 4 — final day */
+    .hero--final { height: 897px; padding-top:38px; }
+    .hero--final .headline-tag { margin-top:33px; }
+    .large-offer { margin: 13px 0 0; display:flex; flex-direction:column; align-items:center; line-height:.83; font-weight:900; }
+    .large-offer .numerals { font-size:122px; letter-spacing:-.09em; }
+    .large-offer .off-word { margin-top:10px; font-size:43px; letter-spacing:.13em; }
+    .hero--final .deadline-tag { margin-top:26px; }
+    .deadline-value { color: var(--orange); font-size:19px; font-weight:900; text-transform:uppercase; letter-spacing:.14em; margin:12px 0 0; }
+    .hero--final .subheadline-tag { margin-top:23px; }
+    .hero--final .hero-subtitle { max-width:470px; }
+    .hero--final .button-tag { margin-top:24px; }
+    .hero--final .hero-image { margin-top:30px; height: 210px; }
+    .urgent-section { padding:58px 42px 66px; text-align:center; }
+    .urgent-section .section-head { margin-bottom:28px; }
+    .urgent-section .section-copy { margin-top:17px; }
+    .email-four .product-section { padding-top:54px; padding-bottom:36px; }
+    .email-four .trust-section { padding-bottom:56px; }
+
+    /* Email 5 — strictly plain-text visual concept, no graphics. */
+    .email-five { font-family:Arial, Helvetica, sans-serif; }
+    .email-five .email-meta { padding: 24px 25px 20px; border-bottom: 1px solid #e6e6e6; }
+    .email-five .meta-group + .meta-group { margin-top:18px; }
+    .email-five .meta-label { font-size: 10px; font-weight:700; letter-spacing:.12em; }
+    .email-five .meta-value { font-size:19px; font-weight:700; letter-spacing:0; }
+    .email-five .meta-preview { font-size: 16px; letter-spacing:0; }
+    .plain-body { padding: 50px 40px 60px; font-size:17px; color:#1b1b1b; line-height:1.7; }
+    .plain-body .annotation { letter-spacing:.09em; font-family:Arial, sans-serif; font-size:11px; }
+    .plain-body .plain-intro-label { background:var(--orange); font-size:11px; }
+    .plain-block { margin-top:35px; }
+    .plain-block > .annotation { margin-bottom:13px; }
+    .plain-block p { margin: 0 0 20px; }
+    .plain-block a { color:#1358b8; text-decoration:underline; }
+    .plain-footer { border-top: 1px solid #e3e3e3; padding-top:28px; margin-top:135px; color:#474747; font-size:14px; }
+    .plain-footer p { margin:8px 0 0; font-size:13px; line-height:1.6; }
+    .plain-footer a, .plain-footer .pseudo-link { color:#454545; text-decoration:underline; }
+
+    /* Minor wireframe-specific refinements. */
+    .email-two .hero .hero-subtitle { max-width:450px; }
+    .email-two .hero .orange-button { width:300px; }
+    .email-three .hero .orange-button { width:250px; }
+    .email-two .hero .hero-image { height:230px; }
+    .email-two .closing-banner { min-height:330px; }
+    .email-three .hero .hero-subtitle { max-width:465px; }
+    .email-three .closing-banner h2 { font-size:34px; }
+    .email-four .closing-banner h2 { font-size:35px; }
+    .email-four .closing-banner p { max-width:490px; }
+
+    /* Block-based hero alignment keeps every module visible in browser and print. */
+    .hero { display:block; }
+    .hero > .logo-placeholder { margin:0 auto; }
+    .hero .headline-tag, .hero .subheadline-tag,
+    .hero .button-tag, .hero--final .deadline-tag { display:table; margin-left:auto; margin-right:auto; }
+    .hero .hero-title { max-width:none; }
+    .hero .orange-button { display:flex; width:225px; margin:8px auto 0; }
+    .closing-banner .orange-button { display:inline-flex; width:225px; }
+    .hero .code-pill { display:table; width:max-content; margin:17px auto 0; }
+    .hero .hero-image { position:absolute!important; bottom:28px; left:40px; width:calc(100% - 80px); height:230px; margin:0; }
+    .hero--final .hero-image { height:210px; }
+    .product-card .product-image { height:146px; aspect-ratio:auto; }
+
+    @media (max-width:650px) {
+      .showcase { padding:24px 10px 62px; }
+      .showcase-heading { margin-bottom:30px; }
+      .design-stage { margin-bottom:52px; }
+      .design-heading { padding:0 3px; font-size:9px; }
+      .email-meta { padding:20px 19px; }
+      .meta-value { font-size:15px; }
+      .meta-preview { font-size:13px; }
+      .hero { height:auto; min-height:720px; padding:36px 17px 29px; }
+      .hero-title { font-size:clamp(39px,9.8vw,57px); }
+      .hero-subtitle { font-size:clamp(13px,3.7vw,17px); }
+      .hero .hero-image { margin:0; bottom:25px; left:17px; width:calc(100% - 34px); height: clamp(145px,39vw,230px); }
+      .fold-guide { top:650px; }
+      .hero .headline-tag { margin-top:30px; }
+      .steps-section, .product-section, .reason-section, .countdown-section { padding-left:20px; padding-right:20px; }
+      .section-title { font-size: clamp(19px,5vw,25px); }
+      .steps-grid, .product-grid { gap:9px; }
+      .step-card { padding:15px 7px 16px; min-height:165px; }
+      .step-card h3 { font-size:10px; }
+      .step-card p { font-size:10px; }
+      .circle-number { width:35px; height:35px; }
+      .product-card { padding-left:7px; padding-right:7px; }
+      .product-card .product-image { width:100%; height:auto; aspect-ratio:1; }
+      .product-card .product-image span { font-size: 7px; padding:5px; }
+      .product-name { font-size:10px; }
+      .black-button { font-size:9px; min-height:38px; padding: 7px 4px; }
+      .trust-section { padding-left:18px; padding-right:18px; }
+      .trust-grid { gap:6px; }
+      .trust-item p { font-size:8px; }
+      .closing-banner { padding-left: 16px; padding-right: 16px; }
+      .closing-banner h2 { font-size:clamp(26px,7.2vw,35px); }
+      .closing-banner p { font-size:13px; }
+      .focus-section { padding-left:20px; padding-right:20px; }
+      .guidance-card .image-placeholder { width:80px; flex-basis:80px; height:65px; }
+      .guidance-card h3 { font-size:11px; }
+      .guidance-card p { font-size:10.5px; }
+      .focus-product-grid { gap:10px; }
+      .focus-product { min-height:210px; padding-left:7px; padding-right:7px; }
+      .focus-product .product-image { width:96px; height:120px; }
+      .focus-product .background-product-name { font-size:27px; }
+      .objections-section { padding-left:20px; padding-right:20px; }
+      .timer-row { gap:8px; }
+      .timer-box { min-height:75px; }
+      .timer-box strong { font-size:33px; }
+      .timer-box span { font-size:9px; }
+      .reason { gap:10px; }
+      .reason p { font-size:12px; }
+      .reason-number { flex-basis:34px; height:34px; }
+      .hero--final { min-height:865px; }
+      .large-offer .numerals { font-size: clamp(91px,24vw,122px); }
+      .large-offer .off-word { font-size:35px; }
+      .hero--final .hero-image { height:clamp(140px,37vw,210px); }
+      .urgent-section { padding-left:19px; padding-right:19px; }
+      .email-five .email-meta { padding-left:23px; padding-right:23px; }
+      .plain-body { padding:38px 25px 45px; font-size:15px; }
+      .plain-footer { margin-top:100px; }
+    }
+    @media (max-width:365px) {
+      .orange-button { min-width:200px; }
+      .annotation { font-size:7px; }
+      .hero-title { font-size:36px; }
+      .hero { min-height:700px; }
+      .fold-guide { top:650px; }
+    }
+    @media print {
+      body { background:#fff; }
+      .showcase { padding:0; }
+      .showcase-heading, .design-heading { display:none; }
+      .design-stage { width:600px; margin:0 auto; break-after:page; }
+      .email { box-shadow:none; }
+      @page { margin:0; size:600px auto; }
+    }
+  </style>
+</head>
+<body>
+<main class="showcase">
+  <header class="showcase-heading">
+    <span class="eyebrow">Onyx Biolabs / Halloween Sale</span>
+    <h1>All Five Email Wireframes</h1>
+    <p>Complete, continuously scrolling HTML recreation · Original copy, annotations and layouts from the supplied PDF</p>
+  </header>
+
+  <!-- EMAIL 1: HALLOWEEN LAUNCH -->
+  <section class="design-stage" aria-labelledby="design-one-label">
+    <div class="design-heading"><span id="design-one-label">Email 01 / Launch — No tricks</span><span>01 / 05</span></div>
+    <article class="email email-one">
+      <header class="email-meta">
+        <div class="meta-group"><span class="meta-label">Subject line</span><p class="meta-value">No tricks. Just 25% off.</p></div>
+        <div class="meta-group"><span class="meta-label">Preview text</span><p class="meta-preview">Our Halloween sale is live, and it won't stick around.</p></div>
+      </header>
+      <section class="hero">
+        <div class="guide-lines"></div>
+        <span class="annotation hero-background-note">BG: Smoke + orange glow</span>
+        <div class="logo-placeholder">ONYX LOGO</div>
+        <span class="annotation headline-tag">Headline</span>
+        <h2 class="hero-title">25% OFF.<br>NO TRICKS.</h2>
+        <span class="annotation subheadline-tag">Subheadline</span>
+        <p class="hero-subtitle">Our Halloween sale is live, and it won't be here long. Take 25% off your order with code SPOOKY25 before it's gone.</p>
+        <span class="annotation button-tag">Button + code pill</span>
+        <span class="orange-button">Claim 25% off</span>
+        <span class="code-pill">CODE: SPOOKY25</span>
+        <div class="image-placeholder hero-image"><span>Hero product shot · Vial lineup cutouts, Halloween lighting</span></div>
+        <div class="fold-guide"><span class="annotation annotation--orange">Fold · 650px</span></div>
+        <svg class="bottom-wave" viewBox="0 0 600 30" preserveAspectRatio="none" aria-hidden="true"><path fill="#f1f1f1" d="M0 16 C72 4 140 29 230 18 S398 4 470 12 S545 18 600 17 V30 H0Z"></path></svg>
+      </section>
+      <section class="section-light steps-section">
+        <div class="section-head"><span class="annotation">How to save · 3 steps</span><h2 class="section-title">3 steps to 25% off</h2></div>
+        <div class="steps-grid">
+          <div class="step-card"><span class="circle-number">1</span><h3>Pick your<br>compounds</h3><p>Browse the full catalog.</p></div>
+          <div class="step-card"><span class="circle-number">2</span><h3>Enter SPOOKY25</h3><p>Add the code at checkout.</p></div>
+          <div class="step-card"><span class="circle-number">3</span><h3>Save 25%</h3><p>Only while the sale lasts.</p></div>
+        </div>
+      </section>
+      <section class="section-white product-section">
+        <div class="section-head"><span class="annotation">Product blocks · Name + button only</span><h2 class="section-title">Stock up while it's 25% off</h2></div>
+        <div class="product-grid">
+          <div class="product-card"><div class="image-placeholder product-image"><span>Vial cutout</span></div><h3 class="product-name">Retatrutide</h3><span class="black-button">Get 25% off</span></div>
+          <div class="product-card"><div class="image-placeholder product-image"><span>Vial cutout</span></div><h3 class="product-name">Tirzepatide</h3><span class="black-button">Get 25% off</span></div>
+          <div class="product-card"><div class="image-placeholder product-image"><span>Vial cutout</span></div><h3 class="product-name">BPC-157</h3><span class="black-button">Get 25% off</span></div>
+        </div>
+      </section>
+      <section class="section-white trust-section">
+        <div class="inner"><span class="annotation">Trust icon row</span>
+          <div class="trust-grid">
+            <div class="trust-item"><svg viewBox="0 0 24 24"><path d="m12 2 8 4v6c0 5-3.7 8.6-8 10-4.3-1.4-8-5-8-10V6z"/><path d="m9 12 2 2 4-4"/></svg><p>Third-party<br>tested</p></div>
+            <div class="trust-item"><svg viewBox="0 0 24 24"><path d="M9 2h6M10 2v7L4.5 18A2.7 2.7 0 0 0 6.8 22h10.4a2.7 2.7 0 0 0 2.3-4L14 9V2"/><path d="M8 15h8"/></svg><p>&gt;99% purity</p></div>
+            <div class="trust-item"><svg viewBox="0 0 24 24"><path d="M6 2h8l5 5v15H6z"/><path d="M14 2v5h5M9 12h7M9 16h7"/></svg><p>COA available</p></div>
+            <div class="trust-item"><svg viewBox="0 0 24 24"><path d="M2 6h12v11H2zM14 10h4l4 4v3h-8z"/><circle cx="6" cy="19" r="2"/><circle cx="18" cy="19" r="2"/></svg><p>Fast shipping</p></div>
+          </div>
+        </div>
+      </section>
+      <section class="closing-banner">
+        <div class="guide-lines"></div>
+        <span class="annotation">Closing offer banner · Over image</span>
+        <h2>25% off<br>won't last</h2>
+        <p>Use code SPOOKY25 at checkout before it's gone.</p>
+        <span class="orange-button">Claim 25% off</span>
+        <svg class="bottom-wave" viewBox="0 0 600 30" preserveAspectRatio="none" aria-hidden="true"><path fill="#eaeaea" d="M0 8 C76 22 123 4 212 11 S381 24 468 16 S537 11 600 17 V30 H0Z"></path></svg>
+      </section>
+      <footer class="footer"><span class="annotation">Footer</span><br><div class="logo-placeholder">ONYX LOGO</div><div class="social-circles"><span></span><span></span><span></span></div><p class="footer-links"><span class="pseudo-link">Manage preferences</span> | <span class="pseudo-link">Unsubscribe</span></p><p class="legal-copy">For research use only. Not for human consumption.<br>[COMPANY ADDRESS]</p></footer>
+    </article>
+  </section>
+
+  <!-- EMAIL 2: RESEARCH-FOCUS PRODUCT FINDER -->
+  <section class="design-stage" aria-labelledby="design-two-label">
+    <div class="design-heading"><span id="design-two-label">Email 02 / Shop by research focus</span><span>02 / 05</span></div>
+    <article class="email email-two">
+      <header class="email-meta">
+        <div class="meta-group"><span class="meta-label">Subject line</span><p class="meta-value">Don't waste your 25% off on the wrong compound</p></div>
+        <div class="meta-group"><span class="meta-label">Preview text</span><p class="meta-preview">Find yours in seconds, while the sale is still on.</p></div>
+      </header>
+      <section class="hero">
+        <div class="guide-lines"></div>
+        <span class="annotation hero-background-note">BG: Dark lab texture</span>
+        <div class="logo-placeholder">ONYX LOGO</div>
+        <span class="annotation headline-tag">Headline</span>
+        <h2 class="hero-title">Pick yours.<br>Save 25%.</h2>
+        <span class="annotation subheadline-tag">Subheadline</span>
+        <p class="hero-subtitle">Not sure where to start? Shop by research focus below and lock in 25% off with code SPOOKY25 while the sale is still on.</p>
+        <span class="annotation button-tag">Button + code pill</span>
+        <span class="orange-button">Find your compound</span>
+        <span class="code-pill">CODE: SPOOKY25</span>
+        <div class="image-placeholder hero-image"><span>Hero shot · Two vial groups: metabolic left, recovery right (new images, not from Oct 24)</span></div>
+        <div class="fold-guide"><span class="annotation annotation--orange">Fold · 650px</span></div>
+        <svg class="bottom-wave" viewBox="0 0 600 30" preserveAspectRatio="none" aria-hidden="true"><path fill="#f1f1f1" d="M0 16 C80 3 153 25 241 13 S452 6 600 17 V30 H0Z"></path></svg>
+      </section>
+      <section class="section-light focus-section">
+        <div class="section-head"><span class="annotation">Section heading</span><h2 class="section-title">Shop by research focus</h2></div>
+        <div class="guidance-label"><span class="annotation">Guidance card 1</span></div>
+        <div class="guidance-card"><div class="image-placeholder" aria-label="Image placeholder"></div><div><h3>Metabolic research</h3><p>Receptor agonists studied in metabolic pathway models.</p></div></div>
+        <div class="products-guide-label"><span class="annotation">Product blocks · Name behind vial · Name + button only</span></div>
+        <div class="focus-product-grid">
+          <div class="focus-product"><span class="background-product-name">Retatrutide</span><div class="image-placeholder product-image"><span>Vial</span></div><h3 class="product-name">Retatrutide</h3><span class="black-button">Get 25% off</span></div>
+          <div class="focus-product"><span class="background-product-name">Tirzepatide</span><div class="image-placeholder product-image"><span>Vial</span></div><h3 class="product-name">Tirzepatide</h3><span class="black-button">Get 25% off</span></div>
+        </div>
+        <div class="guidance-label" style="margin-top:30px"><span class="annotation">Guidance card 2</span></div>
+        <div class="guidance-card"><div class="image-placeholder" aria-label="Image placeholder"></div><div><h3>Tissue &amp; recovery research</h3><p>Peptides studied in tissue-repair models.</p></div></div>
+        <div class="products-guide-label"><span class="annotation">Product blocks · Name behind vial · Name + button only</span></div>
+        <div class="focus-product-grid">
+          <div class="focus-product"><span class="background-product-name">BPC-157</span><div class="image-placeholder product-image"><span>Vial</span></div><h3 class="product-name">BPC-157</h3><span class="black-button">Get 25% off</span></div>
+          <div class="focus-product"><span class="background-product-name">[Product name]</span><div class="image-placeholder product-image"><span>Vial</span></div><h3 class="product-name">[Product name]</h3><span class="black-button">Get 25% off</span></div>
+        </div>
+      </section>
+      <section class="section-white objections-section">
+        <div class="section-head"><span class="annotation">Objection handling</span><h2 class="section-title">Still deciding?</h2></div>
+        <div class="objection-box"><h3>How do I know what I'm getting?</h3><p>Every compound is third-party lab tested to &gt;99% purity, with a COA to back it up.</p></div>
+        <div class="objection-box"><h3>How long do I have?</h3><p>Not long. Once the sale ends, SPOOKY25 stops working and prices go back to normal.</p></div>
+        <div class="objection-box"><h3>Still not sure which to pick?</h3><p>Our team can help you choose: [SUPPORT EMAIL].</p></div>
+      </section>
+      <section class="closing-banner">
+        <div class="guide-lines"></div>
+        <svg class="top-wave" viewBox="0 0 600 30" preserveAspectRatio="none" aria-hidden="true"><path fill="#ffffff" d="M0 0H600V15C490 4 440 21 351 15S185 5 94 13S28 12 0 16Z"></path></svg>
+        <span class="annotation">Closing offer banner · Over image</span>
+        <h2>Your 25% off<br>is running out</h2>
+        <p>Use code SPOOKY25 at checkout before it's gone.</p>
+        <span class="orange-button">Claim 25% off</span>
+        <svg class="bottom-wave" viewBox="0 0 600 30" preserveAspectRatio="none" aria-hidden="true"><path fill="#eaeaea" d="M0 8 C76 22 123 4 212 11 S381 24 468 16 S537 11 600 17 V30 H0Z"></path></svg>
+      </section>
+      <footer class="footer"><span class="annotation">Footer</span><br><div class="logo-placeholder">ONYX LOGO</div><div class="social-circles"><span></span><span></span><span></span></div><p class="footer-links"><span class="pseudo-link">Manage preferences</span> | <span class="pseudo-link">Unsubscribe</span></p></footer>
+    </article>
+  </section>
+
+  <!-- EMAIL 3: LAST WEEKEND -->
+  <section class="design-stage" aria-labelledby="design-three-label">
+    <div class="design-heading"><span id="design-three-label">Email 03 / One last weekend</span><span>03 / 05</span></div>
+    <article class="email email-three">
+      <header class="email-meta">
+        <div class="meta-group"><span class="meta-label">Subject line</span><p class="meta-value">Last weekend at 25% off. Then it's gone.</p></div>
+        <div class="meta-group"><span class="meta-label">Preview text</span><p class="meta-preview">Wait, and you'll pay full price for the same order.</p></div>
+      </header>
+      <section class="hero">
+        <div class="guide-lines"></div>
+        <span class="annotation hero-background-note">BG: Moonlit fog + glow</span>
+        <div class="logo-placeholder">ONYX LOGO</div>
+        <span class="annotation headline-tag">Headline</span>
+        <h2 class="hero-title">One last<br>weekend.</h2>
+        <span class="annotation subheadline-tag">Subheadline</span>
+        <p class="hero-subtitle">This is the final weekend of our Halloween sale. Once it ends, so does your 25% off. Use code SPOOKY25 while you still can.</p>
+        <span class="annotation button-tag">Button + code pill</span>
+        <span class="orange-button">Lock in 25% off</span>
+        <span class="code-pill">CODE: SPOOKY25</span>
+        <div class="image-placeholder hero-image"><span>Hero shot · Fresh image, not used Oct 24 or Oct 28</span></div>
+        <div class="fold-guide"><span class="annotation annotation--orange">Fold · 650px</span></div>
+        <svg class="bottom-wave" viewBox="0 0 600 30" preserveAspectRatio="none" aria-hidden="true"><path fill="#f1f1f1" d="M0 16 C80 3 153 25 241 13 S452 6 600 17 V30 H0Z"></path></svg>
+      </section>
+      <section class="section-light countdown-section">
+        <div class="section-head"><span class="annotation">Countdown timer · Live Omnisend block, counts down to sale end</span><h2 class="section-title">The clock is ticking</h2></div>
+        <div class="timer-row four"><div class="timer-box"><strong>00</strong><span>DAYS</span></div><div class="timer-box"><strong>00</strong><span>HRS</span></div><div class="timer-box"><strong>00</strong><span>MINS</span></div><div class="timer-box"><strong>00</strong><span>SECS</span></div></div>
+        <p class="timer-note">When it hits zero, your 25% off is gone.</p>
+      </section>
+      <section class="section-white reason-section">
+        <div class="section-head"><span class="annotation">Why now · 3 points</span><h2 class="section-title">Why you shouldn't wait</h2></div>
+        <div class="reason-grid"><div class="reason"><span class="reason-number">1</span><p>When the sale ends, SPOOKY25 stops working.</p></div><div class="reason"><span class="reason-number">2</span><p>Wait, and you pay full price for the exact same order.</p></div><div class="reason"><span class="reason-number">3</span><p>Other researchers are already stocking up. Don't be the one paying full price.</p></div></div>
+      </section>
+      <section class="section-white product-section">
+        <div class="section-head"><span class="annotation">Product blocks · Name + button only · Fresh images</span><h2 class="section-title">Stock up before it ends</h2></div>
+        <div class="product-grid">
+          <div class="product-card"><div class="image-placeholder product-image"><span>Vial cutout</span></div><h3 class="product-name">BPC-157</h3><span class="black-button">Get 25% off</span></div>
+          <div class="product-card"><div class="image-placeholder product-image"><span>Vial cutout</span></div><h3 class="product-name">Retatrutide</h3><span class="black-button">Get 25% off</span></div>
+          <div class="product-card"><div class="image-placeholder product-image"><span>Vial cutout</span></div><h3 class="product-name">[Product name]</h3><span class="black-button">Get 25% off</span></div>
+        </div>
+      </section>
+      <section class="closing-banner">
+        <div class="guide-lines"></div>
+        <svg class="top-wave" viewBox="0 0 600 30" preserveAspectRatio="none" aria-hidden="true"><path fill="#fff" d="M0 0H600V15C490 4 440 21 351 15S185 5 94 13S28 12 0 16Z"></path></svg>
+        <span class="annotation">Closing offer banner · Over image</span>
+        <h2>This weekend is<br>your last shot</h2>
+        <p>Use code SPOOKY25 at checkout before your 25% off is gone.</p>
+        <span class="orange-button">Lock in 25% off</span>
+        <svg class="bottom-wave" viewBox="0 0 600 30" preserveAspectRatio="none" aria-hidden="true"><path fill="#eaeaea" d="M0 8 C76 22 123 4 212 11 S381 24 468 16 S537 11 600 17 V30 H0Z"></path></svg>
+      </section>
+      <footer class="footer"><span class="annotation">Footer</span><br><div class="logo-placeholder">ONYX LOGO</div><div class="social-circles"><span></span><span></span><span></span></div><p class="footer-links"><span class="pseudo-link">Manage preferences</span> | <span class="pseudo-link">Unsubscribe</span></p><p class="legal-copy">For research use only. Not for human consumption.<br>[COMPANY ADDRESS]</p></footer>
+    </article>
+  </section>
+
+  <!-- EMAIL 4: FINAL DAY -->
+  <section class="design-stage" aria-labelledby="design-four-label">
+    <div class="design-heading"><span id="design-four-label">Email 04 / Final day</span><span>04 / 05</span></div>
+    <article class="email email-four">
+      <header class="email-meta">
+        <div class="meta-group"><span class="meta-label">Subject line</span><p class="meta-value">Final day: your 25% off disappears tonight</p></div>
+        <div class="meta-group"><span class="meta-label">Preview text</span><p class="meta-preview">After tonight, it's back to full price.</p></div>
+      </header>
+      <section class="hero hero--final">
+        <div class="guide-lines"></div>
+        <span class="annotation hero-background-note">BG: Embers / final glow</span>
+        <div class="logo-placeholder">ONYX LOGO</div>
+        <span class="annotation headline-tag">Headline · Offer numerals</span>
+        <h2 class="large-offer"><span class="numerals">25%</span><span class="off-word">OFF</span></h2>
+        <span class="annotation deadline-tag">Deadline line</span>
+        <p class="deadline-value">Ends tonight</p>
+        <span class="annotation subheadline-tag">Subheadline</span>
+        <p class="hero-subtitle">This is it: the final day of our Halloween sale. Use code SPOOKY25 for 25% off before it disappears tonight.</p>
+        <span class="annotation button-tag">Button + code pill</span>
+        <span class="orange-button">Claim 25% off</span>
+        <span class="code-pill">CODE: SPOOKY25</span>
+        <div class="image-placeholder hero-image"><span>Hero shot · Fresh image, not used in earlier sends</span></div>
+        <div class="fold-guide"><span class="annotation annotation--orange">Fold · 650px</span></div>
+        <svg class="bottom-wave" viewBox="0 0 600 30" preserveAspectRatio="none" aria-hidden="true"><path fill="#f1f1f1" d="M0 16 C80 3 153 25 241 13 S452 6 600 17 V30 H0Z"></path></svg>
+      </section>
+      <section class="section-light urgent-section">
+        <div class="section-head"><span class="annotation">Why now · Urgency</span><h2 class="section-title">After tonight, it's gone</h2><p class="section-copy">When the clock hits zero, SPOOKY25 stops working and every order goes back to full price.</p></div>
+        <span class="annotation">Countdown timer · Live Omnisend block</span>
+        <div class="timer-row three"><div class="timer-box"><strong>00</strong><span>HRS</span></div><div class="timer-box"><strong>00</strong><span>MINS</span></div><div class="timer-box"><strong>00</strong><span>SECS</span></div></div>
+      </section>
+      <section class="section-white product-section">
+        <div class="section-head"><span class="annotation">Product blocks · Name + button only · Fresh images</span><h2 class="section-title">Last call at 25% off</h2></div>
+        <div class="product-grid">
+          <div class="product-card"><div class="image-placeholder product-image"><span>Vial cutout</span></div><h3 class="product-name">Tirzepatide</h3><span class="black-button">Get 25% off</span></div>
+          <div class="product-card"><div class="image-placeholder product-image"><span>Vial cutout</span></div><h3 class="product-name">BPC-157</h3><span class="black-button">Get 25% off</span></div>
+          <div class="product-card"><div class="image-placeholder product-image"><span>Vial cutout</span></div><h3 class="product-name">[Product name]</h3><span class="black-button">Get 25% off</span></div>
+        </div>
+      </section>
+      <section class="section-white trust-section">
+        <div class="inner"><span class="annotation">Trust icon row</span>
+          <div class="trust-grid">
+            <div class="trust-item"><svg viewBox="0 0 24 24"><path d="m12 2 8 4v6c0 5-3.7 8.6-8 10-4.3-1.4-8-5-8-10V6z"/><path d="m9 12 2 2 4-4"/></svg><p>Third-party<br>tested</p></div>
+            <div class="trust-item"><svg viewBox="0 0 24 24"><path d="M9 2h6M10 2v7L4.5 18A2.7 2.7 0 0 0 6.8 22h10.4a2.7 2.7 0 0 0 2.3-4L14 9V2"/><path d="M8 15h8"/></svg><p>&gt;99% purity</p></div>
+            <div class="trust-item"><svg viewBox="0 0 24 24"><path d="M6 2h8l5 5v15H6z"/><path d="M14 2v5h5M9 12h7M9 16h7"/></svg><p>COA available</p></div>
+            <div class="trust-item"><svg viewBox="0 0 24 24"><path d="M2 6h12v11H2zM14 10h4l4 4v3h-8z"/><circle cx="6" cy="19" r="2"/><circle cx="18" cy="19" r="2"/></svg><p>Fast shipping</p></div>
+          </div>
+        </div>
+      </section>
+      <section class="closing-banner">
+        <div class="guide-lines"></div>
+        <svg class="top-wave" viewBox="0 0 600 30" preserveAspectRatio="none" aria-hidden="true"><path fill="#fff" d="M0 0H600V15C490 4 440 21 351 15S185 5 94 13S28 12 0 16Z"></path></svg>
+        <span class="annotation">Closing offer banner · Over image</span>
+        <h2>Last chance<br>at 25% off</h2>
+        <p>Once tonight's over, so is this deal. Use code SPOOKY25 at checkout.</p>
+        <span class="orange-button">Claim 25% off</span>
+        <svg class="bottom-wave" viewBox="0 0 600 30" preserveAspectRatio="none" aria-hidden="true"><path fill="#eaeaea" d="M0 8 C76 22 123 4 212 11 S381 24 468 16 S537 11 600 17 V30 H0Z"></path></svg>
+      </section>
+      <footer class="footer"><span class="annotation">Footer</span><br><div class="logo-placeholder">ONYX LOGO</div><div class="social-circles"><span></span><span></span><span></span></div><p class="footer-links"><span class="pseudo-link">Manage preferences</span> | <span class="pseudo-link">Unsubscribe</span></p></footer>
+    </article>
+  </section>
+
+  <!-- EMAIL 5: TEXT-ONLY LAST CALL -->
+  <section class="design-stage" aria-labelledby="design-five-label">
+    <div class="design-heading"><span id="design-five-label">Email 05 / Plain-text last reminder</span><span>05 / 05</span></div>
+    <article class="email email-five">
+      <header class="email-meta">
+        <div class="meta-group"><span class="meta-label">From name</span><p class="meta-value">[NAME] at Onyx Biolabs</p></div>
+        <div class="meta-group"><span class="meta-label">Subject line</span><p class="meta-value">closing in a few hours</p></div>
+        <div class="meta-group"><span class="meta-label">Preview text</span><p class="meta-preview">last chance before it's back to full price</p></div>
+      </header>
+      <div class="plain-body">
+        <span class="annotation plain-intro-label">Plain text · No logo, images or buttons</span>
+        <div class="plain-block"><span class="annotation">Greeting</span><p>Hi [FIRST NAME],</p></div>
+        <div class="plain-block"><span class="annotation">Body</span><p>You checked out our Halloween sale this week, so I didn't want you to miss this.</p><p>In a few hours the sale closes and code SPOOKY25 stops working. Until then, it still takes 25% off your order, so if something's been on your mind, now's the moment.</p></div>
+        <div class="plain-block"><span class="annotation">Text link</span><p>Grab yours here: <a href="https://onyxbiolabs.com">onyxbiolabs.com</a></p><p>After that, it's full price again.</p></div>
+        <div class="plain-block"><span class="annotation">Sign-off</span><p>[NAME]<br>Onyx Biolabs</p></div>
+        <div class="plain-block"><span class="annotation">P.S.</span><p>P.S. This is the last reminder you'll get. Once it's gone, it's gone.</p></div>
+        <footer class="plain-footer"><span class="annotation">Slim footer</span><p><span class="pseudo-link">Unsubscribe</span> | <span class="pseudo-link">Manage preferences</span></p><p>For research use only. Not for human consumption. [COMPANY ADDRESS]</p></footer>
+      </div>
+    </article>
+  </section>
+</main>
+</body>
+</html>
