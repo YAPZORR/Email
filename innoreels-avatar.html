@@ -1,0 +1,570 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Spicy Lab default avatars</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,400..800&display=swap" rel="stylesheet">
+<style>
+  :root {
+    box-sizing: border-box;
+    padding-top: env(safe-area-inset-top, 0px);
+    padding-bottom: env(safe-area-inset-bottom, 0px);
+    color-scheme: light;
+    --bg: #FFF7E4;
+    --glow: rgba(255, 176, 40, 0.22);
+    --ink: #1E170F;
+    --muted: #6F6049;
+    --line: #EAD9B6;
+    --ring: rgba(30, 23, 15, 0.08);
+    --seg-bg: #FBE9C3;
+    --seg-on: #1E170F;
+    --seg-on-ink: #FFD95E;
+    --focus: #D9650B;
+    --toast-bg: #1E170F;
+    --toast-ink: #FFE9A8;
+  }
+  @media (prefers-color-scheme: dark) {
+    :root:not([data-theme="light"]) {
+      color-scheme: dark;
+      --bg: #100E0B;
+      --glow: rgba(255, 160, 30, 0.13);
+      --ink: #F7EBD0;
+      --muted: #A6957B;
+      --line: #2C251C;
+      --ring: rgba(255, 196, 80, 0.16);
+      --seg-bg: #1C1813;
+      --seg-on: #FFC93D;
+      --seg-on-ink: #140F08;
+      --focus: #FFC233;
+      --toast-bg: #FFC93D;
+      --toast-ink: #140F08;
+    }
+  }
+  :root[data-theme="dark"] {
+    color-scheme: dark;
+    --bg: #100E0B;
+    --glow: rgba(255, 160, 30, 0.13);
+    --ink: #F7EBD0;
+    --muted: #A6957B;
+    --line: #2C251C;
+    --ring: rgba(255, 196, 80, 0.16);
+    --seg-bg: #1C1813;
+    --seg-on: #FFC93D;
+    --seg-on-ink: #140F08;
+    --focus: #FFC233;
+    --toast-bg: #FFC93D;
+    --toast-ink: #140F08;
+  }
+
+  *, *::before, *::after { box-sizing: inherit; }
+  html { scroll-padding-top: env(safe-area-inset-top, 0px); }
+  body {
+    margin: 0;
+    min-height: 100%;
+    background:
+      radial-gradient(70rem 32rem at 18% -6rem, var(--glow), transparent 70%),
+      var(--bg);
+    color: var(--ink);
+    font-family: "Bricolage Grotesque", ui-sans-serif, system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
+    font-optical-sizing: auto;
+    font-size: 1rem;
+    line-height: 1.5;
+    -webkit-font-smoothing: antialiased;
+  }
+
+  .wrap {
+    max-width: 72rem;
+    margin: 0 auto;
+    padding: clamp(1.5rem, 4vw, 3.5rem) clamp(1.25rem, 4vw, 3rem) 5rem;
+  }
+
+  /* Header */
+  .brand {
+    display: flex;
+    align-items: center;
+    gap: 0.6rem;
+    font-weight: 700;
+    font-size: 1rem;
+    letter-spacing: -0.01em;
+  }
+  .brand .mark { width: 2.25rem; height: 2.25rem; border-radius: 23%; overflow: hidden; flex: none; }
+  .brand .mark svg { display: block; width: 100%; height: 100%; }
+
+  header { margin-bottom: clamp(2.5rem, 6vw, 4rem); }
+  h1 {
+    margin: clamp(2rem, 5vw, 3.25rem) 0 1rem;
+    font-size: clamp(2.6rem, 7vw, 5rem);
+    font-weight: 800;
+    font-variation-settings: "opsz" 96;
+    line-height: 0.95;
+    letter-spacing: -0.035em;
+    max-width: 12ch;
+  }
+  .lede {
+    margin: 0;
+    max-width: 58ch;
+    color: var(--muted);
+    font-size: 1.075rem;
+  }
+
+  .controls {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 0.75rem 1.25rem;
+    margin-top: 2rem;
+  }
+  .seg {
+    display: inline-flex;
+    padding: 4px;
+    gap: 4px;
+    border-radius: 999px;
+    background: var(--seg-bg);
+  }
+  .seg button {
+    font: inherit;
+    font-weight: 600;
+    font-size: 0.95rem;
+    border: 0;
+    border-radius: 999px;
+    padding: 0.5rem 1rem;
+    background: transparent;
+    color: var(--ink);
+    cursor: pointer;
+  }
+  .seg button[aria-pressed="true"] { background: var(--seg-on); color: var(--seg-on-ink); }
+  .controls .hint { color: var(--muted); font-size: 0.92rem; }
+
+  button:focus-visible { outline: 2px solid var(--focus); outline-offset: 2px; }
+
+  /* Lineup */
+  .lineup {
+    display: grid;
+    grid-template-columns: repeat(5, minmax(0, 1fr));
+    gap: clamp(2rem, 4vw, 3.25rem) clamp(1rem, 3vw, 2.5rem);
+    margin: 0;
+    padding: 0;
+    list-style: none;
+  }
+  .av { margin: 0; display: flex; flex-direction: column; align-items: flex-start; }
+  .tile {
+    width: 100%;
+    max-width: 11rem;
+    aspect-ratio: 1;
+    border-radius: 50%;
+    overflow: hidden;
+    box-shadow: 0 0 0 1px var(--ring);
+    transition: border-radius 0.35s cubic-bezier(.3,.7,.2,1);
+  }
+  .tile svg { display: block; width: 100%; height: 100%; }
+  body[data-shape="rounded"] .tile { border-radius: 23%; }
+
+  .av .name {
+    margin-top: 0.9rem;
+    font-weight: 700;
+    font-size: 1.1rem;
+    letter-spacing: -0.01em;
+    line-height: 1.2;
+  }
+  .av .file { color: var(--muted); font-size: 0.85rem; }
+  .copy {
+    margin-top: 0.6rem;
+    font: inherit;
+    font-size: 0.88rem;
+    font-weight: 600;
+    color: var(--ink);
+    background: transparent;
+    border: 1px solid var(--line);
+    border-radius: 999px;
+    padding: 0.3rem 0.8rem;
+    cursor: pointer;
+  }
+  .copy:hover { border-color: var(--muted); }
+
+  /* Sizes */
+  .sizes { margin-top: clamp(4rem, 9vw, 6.5rem); }
+  .sizes h2 {
+    margin: 0 0 0.35rem;
+    font-size: clamp(1.5rem, 3vw, 2rem);
+    font-weight: 800;
+    letter-spacing: -0.025em;
+    line-height: 1.1;
+  }
+  .sizes > p { margin: 0 0 2rem; color: var(--muted); max-width: 58ch; }
+  .row {
+    display: grid;
+    grid-template-columns: 4rem 1fr;
+    align-items: center;
+    gap: 1rem;
+    padding: 1.1rem 0;
+    border-top: 1px solid var(--line);
+  }
+  .row:last-child { border-bottom: 1px solid var(--line); }
+  .row .px { color: var(--muted); font-size: 0.92rem; font-variant-numeric: tabular-nums; }
+  .row .set { display: flex; flex-wrap: wrap; gap: 0.75rem; }
+  .row .tile { max-width: none; box-shadow: none; }
+
+  /* Toast */
+  .toast-wrap {
+    position: fixed;
+    left: 0; right: 0; bottom: 0;
+    display: flex;
+    justify-content: center;
+    padding: 0 1rem calc(1.25rem + env(safe-area-inset-bottom, 0px));
+    pointer-events: none;
+  }
+  .toast {
+    background: var(--toast-bg);
+    color: var(--toast-ink);
+    font-weight: 600;
+    font-size: 0.95rem;
+    padding: 0.65rem 1.1rem;
+    border-radius: 999px;
+    opacity: 0;
+    transform: translateY(8px);
+    transition: opacity .2s ease, transform .2s ease;
+  }
+  .toast.show { opacity: 1; transform: none; }
+
+  @media (max-width: 900px) {
+    .lineup { grid-template-columns: repeat(3, minmax(0, 1fr)); }
+  }
+  @media (max-width: 560px) {
+    .lineup { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+    .row { grid-template-columns: 1fr; gap: 0.6rem; }
+  }
+  @media (prefers-reduced-motion: reduce) {
+    .tile, .toast { transition: none; }
+  }
+</style>
+</head>
+<body data-shape="circle">
+<div class="wrap">
+  <header>
+    <div class="brand"><span class="mark" id="mark"></span><span>Spicy Lab</span></div>
+    <h1>Default profile avatars</h1>
+    <p class="lede">Ten stand-ins for people who haven’t uploaded a photo yet, all built from the devil mascot and the logo’s yellow-to-orange palette. Each one is a single SVG, so it stays sharp from a tiny comment avatar to a full profile header.</p>
+    <div class="controls">
+      <div class="seg" role="group" aria-label="Avatar shape">
+        <button type="button" data-shape="circle" aria-pressed="true">Circle</button>
+        <button type="button" data-shape="rounded" aria-pressed="false">Rounded square</button>
+      </div>
+      <span class="hint">Copy SVG gives you the file in the shape selected here.</span>
+    </div>
+  </header>
+
+  <main>
+    <ul class="lineup" id="lineup" aria-label="Avatars"></ul>
+
+    <section class="sizes" aria-labelledby="sizes-title">
+      <h2 id="sizes-title">At real sizes</h2>
+      <p>How they read in profile headers, comment threads and template credits.</p>
+      <div id="rows"></div>
+    </section>
+  </main>
+</div>
+<div class="toast-wrap"><div class="toast" id="toast" role="status" aria-live="polite"></div></div>
+
+<script>
+(function () {
+  "use strict";
+
+  // Brand backgrounds, all pulled from the logo's yellow → orange range plus its dark surround
+  var BGS = {
+    sun:       ["#FFDC64", "#FF971E"],
+    honey:     ["#FFE68E", "#FFBC2C"],
+    tangerine: ["#FFB840", "#F27812"],
+    ember:     ["#FF9A26", "#E5600F"],
+    cream:     ["#FFF4CF", "#FFCF57"],
+    night:     ["#2E2519", "#0C0B09"]
+  };
+
+  // Shared geometry (200 × 200 viewBox)
+  var HEAD   = "M100 46C132 46 156 70 156 102C156 132 132 150 100 150C68 150 44 132 44 102C44 70 68 46 100 46Z";
+  var HORN   = "M70 64C56 56 50 38 60 22C64 36 76 46 88 52Z";
+  var BODY   = "M0 200V170Q40 140 100 136Q160 140 200 170V200Z";
+  var COLLAR = "M90 170C74 151 52 130 12 118C20 142 22 168 16 200H100V184Q96 176 90 170Z";
+  var EDGE   = "M90 170C74 151 52 130 12 118";
+  var EYE    = "M60 88Q78 90 94 100Q88 111 76 110Q62 107 60 88Z";
+  var GRIN   = "M58 116Q100 130 142 116Q136 144 100 146Q64 144 58 116Z";
+  var LIT    = "#FFDB55";
+
+  function mirror(s) { return '<g transform="translate(200 0) scale(-1 1)">' + s + "</g>"; }
+  function pair(s) { return s + mirror(s); }
+
+  function defs(p, bg) {
+    var c = BGS[bg];
+    var dark = bg === "night";
+    return '<defs>' +
+      '<linearGradient id="' + p + 'bg" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="' + c[0] + '"/><stop offset="1" stop-color="' + c[1] + '"/></linearGradient>' +
+      '<radialGradient id="' + p + 'sheen" cx=".2" cy=".1" r=".75"><stop offset="0" stop-color="#fff" stop-opacity="' + (dark ? 0 : 0.3) + '"/><stop offset="1" stop-color="#fff" stop-opacity="0"/></radialGradient>' +
+      '<radialGradient id="' + p + 'warm" cx=".5" cy=".5" r=".5"><stop offset="0" stop-color="#FF9A1E" stop-opacity=".42"/><stop offset="1" stop-color="#FF9A1E" stop-opacity="0"/></radialGradient>' +
+      '<radialGradient id="' + p + 'head" cx=".34" cy=".26" r=".9"><stop offset="0" stop-color="#57514c"/><stop offset=".38" stop-color="#211e1c"/><stop offset="1" stop-color="#070606"/></radialGradient>' +
+      '<radialGradient id="' + p + 'gold" cx=".34" cy=".26" r=".9"><stop offset="0" stop-color="#FFF6CC"/><stop offset=".42" stop-color="#FFC936"/><stop offset="1" stop-color="#E0760E"/></radialGradient>' +
+      '<linearGradient id="' + p + 'horn" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#FFF5C8"/><stop offset=".5" stop-color="#FFC23C"/><stop offset="1" stop-color="#DD720C"/></linearGradient>' +
+      '<radialGradient id="' + p + 'eye" cx=".5" cy=".55" r=".6"><stop offset="0" stop-color="#FFFDE8"/><stop offset=".45" stop-color="#FFE466"/><stop offset="1" stop-color="#FFAA10"/></radialGradient>' +
+      '<linearGradient id="' + p + 'grin" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#FFF9E0"/><stop offset="1" stop-color="#F6C04A"/></linearGradient>' +
+      '<linearGradient id="' + p + 'cape" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#2d2926"/><stop offset="1" stop-color="#0a0909"/></linearGradient>' +
+      '<linearGradient id="' + p + 'collar" x1="1" y1="0" x2="0" y2="0"><stop offset="0" stop-color="#0b0a0a"/><stop offset="1" stop-color="#3b3633"/></linearGradient>' +
+      '<linearGradient id="' + p + 'edge" x1="1" y1="1" x2="0" y2="0"><stop offset="0" stop-color="#F59A16"/><stop offset="1" stop-color="#FFE27E"/></linearGradient>' +
+      '<linearGradient id="' + p + 'mirror" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#FFF1B4"/><stop offset=".5" stop-color="#FFB521"/><stop offset="1" stop-color="#D9560B"/></linearGradient>' +
+      '<linearGradient id="' + p + 'flame" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#FFF0A0"/><stop offset=".45" stop-color="#FFB21A"/><stop offset="1" stop-color="#F0520E"/></linearGradient>' +
+      '<linearGradient id="' + p + 'hot" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#FF8A2A"/><stop offset="1" stop-color="#B8340A"/></linearGradient>' +
+      '<linearGradient id="' + p + 'tongue" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#FF7A32"/><stop offset="1" stop-color="#E23A10"/></linearGradient>' +
+      '<filter id="' + p + 'glow" x="-60%" y="-60%" width="220%" height="220%"><feGaussianBlur stdDeviation="3" result="b"/><feMerge><feMergeNode in="b"/><feMergeNode in="SourceGraphic"/></feMerge></filter>' +
+      '<filter id="' + p + 'soft" x="-40%" y="-40%" width="180%" height="180%"><feGaussianBlur stdDeviation="5"/></filter>' +
+      '</defs>';
+  }
+
+  // ---- reusable parts
+  function horns(p, fill) {
+    return pair('<path d="' + HORN + '" fill="' + (fill || "url(#" + p + "horn)") + '" stroke="#7A3606" stroke-opacity=".35" stroke-width="1.2" stroke-linejoin="round"/>');
+  }
+  function head(p, fill, glossOpacity) {
+    return '<path d="' + HEAD + '" fill="' + (fill || "url(#" + p + "head)") + '"/>' +
+      '<ellipse cx="76" cy="68" rx="20" ry="8.5" transform="rotate(-32 76 68)" fill="#fff" opacity="' + (glossOpacity || 0.14) + '"/>' +
+      '<path d="M146 122C138 140 120 149 100 149.5" fill="none" stroke="#FFC23A" stroke-opacity=".38" stroke-width="2" stroke-linecap="round"/>';
+  }
+  function body(p, rim) {
+    return '<path d="' + BODY + '" fill="url(#' + p + 'cape)"/>' +
+      (rim ? '<path d="M0 170Q40 140 100 136Q160 140 200 170" fill="none" stroke="url(#' + p + 'edge)" stroke-opacity=".55" stroke-width="2"/>' : "");
+  }
+  function collar(p) {
+    return pair('<path d="' + COLLAR + '" fill="url(#' + p + 'collar)"/>' +
+      '<path d="' + EDGE + '" fill="none" stroke="url(#' + p + 'edge)" stroke-width="3" stroke-linecap="round"/>');
+  }
+  function angryEyes(p) {
+    return pair('<path d="' + EYE + '" fill="url(#' + p + 'eye)" filter="url(#' + p + 'glow)"/>' +
+      '<ellipse cx="80" cy="102" rx="2.6" ry="4.4" fill="#3A1F04"/>');
+  }
+  function grin(p) { return '<path d="' + GRIN + '" fill="url(#' + p + 'grin)"/>'; }
+
+  // ---- the ten avatars
+  var AVATARS = [
+    {
+      id: "classic", name: "Classic", bg: "sun",
+      face: function (p) { return angryEyes(p) + grin(p); }
+    },
+    {
+      id: "wink", name: "Wink", bg: "honey",
+      face: function (p) {
+        return '<path d="M62 101Q78 89 94 101" fill="none" stroke="' + LIT + '" stroke-width="6.5" stroke-linecap="round" filter="url(#' + p + 'glow)"/>' +
+          mirror('<path d="' + EYE + '" fill="url(#' + p + 'eye)" filter="url(#' + p + 'glow)"/><ellipse cx="80" cy="102" rx="2.6" ry="4.4" fill="#3A1F04"/>') +
+          '<path d="M68 121Q104 134 138 111Q134 141 104 144Q80 144 68 121Z" fill="url(#' + p + 'grin)"/>';
+      }
+    },
+    {
+      id: "shades", name: "Shades", bg: "tangerine",
+      face: function (p) {
+        var lens = '<path d="M50 84H96C98.5 84 99 86 98.4 88.5L95 103C93 110 87.5 113.5 79 113.5H68C58.5 113.5 54 108.5 52.6 100.5Z" fill="url(#' + p + 'mirror)" stroke="#0a0909" stroke-width="3" stroke-linejoin="round"/>' +
+          '<path d="M60 106L73 90" stroke="#fff" stroke-opacity=".75" stroke-width="3.2" stroke-linecap="round"/>' +
+          '<path d="M70 108L78 98.5" stroke="#fff" stroke-opacity=".55" stroke-width="2.2" stroke-linecap="round"/>' +
+          '<path d="M50 86L45 84" stroke="#0a0909" stroke-width="3" stroke-linecap="round"/>';
+        return pair(lens) +
+          '<path d="M96 89.5Q100 86.5 104 89.5" fill="none" stroke="#0a0909" stroke-width="4" stroke-linecap="round"/>' +
+          '<path d="M74 126Q104 135 130 119Q126 139 104 140Q84 140 74 126Z" fill="url(#' + p + 'grin)"/>';
+      }
+    },
+    {
+      id: "inferno", name: "Inferno", bg: "night",
+      back: function (p) {
+        return '<path d="M100 76C74 72 66 48 80 30C80 43 88 48 93 42C88 27 97 12 113 4C108 21 125 30 123 47C129 43 131 36 129 29C142 45 136 72 100 76Z" fill="url(#' + p + 'flame)" filter="url(#' + p + 'glow)"/>' +
+          '<path d="M102 72C88 68 85 54 93 45C95 52 99 53 101 48C99 38 106 30 114 25C112 37 121 44 119 54C119 63 113 71 102 72Z" fill="#FFF3B8" opacity=".85"/>';
+      },
+      rim: true,
+      face: function (p) {
+        return angryEyes(p) +
+          '<path d="M60 114Q100 126 140 114Q134 148 100 150Q66 148 60 114Z" fill="url(#' + p + 'hot)"/>' +
+          '<path d="M64 115.5Q100 126.5 136 115.5L135 119.5Q100 130.5 65 119.5Z" fill="url(#' + p + 'grin)"/>' +
+          pair('<path d="M71 118.4L82 121.6L76 131Z" fill="url(#' + p + 'grin)" stroke="#F6C04A" stroke-width="1" stroke-linejoin="round"/>');
+      }
+    },
+    {
+      id: "smitten", name: "Smitten", bg: "cream",
+      face: function (p) {
+        var heart = "M78 110C66 101 61.5 95 63.5 89.5C65.5 83.5 74 83 78 89.5C82 83 90.5 83.5 92.5 89.5C94.5 95 90 101 78 110Z";
+        return '<path d="' + heart + '" transform="rotate(-10 78 97)" fill="url(#' + p + 'eye)" filter="url(#' + p + 'glow)"/>' +
+          mirror('<path d="' + heart + '" transform="rotate(-10 78 97)" fill="url(#' + p + 'eye)" filter="url(#' + p + 'glow)"/>') +
+          grin(p) +
+          pair('<ellipse cx="62" cy="118" rx="7" ry="4" fill="#FF8A2A" opacity=".55"/>');
+      }
+    },
+    {
+      id: "hooded", name: "Hooded", bg: "ember",
+      noHead: true, noCollar: true, hornsAfter: true,
+      over: function (p) {
+        return '<path d="M24 200C20 126 46 50 100 38C154 50 180 126 176 200Z" fill="url(#' + p + 'cape)"/>' +
+          '<ellipse cx="74" cy="66" rx="18" ry="7" transform="rotate(-38 74 66)" fill="#fff" opacity=".1"/>' +
+          '<path d="M60 158C48 116 66 70 100 64C134 70 152 116 140 158Z" fill="#060505"/>' +
+          '<path d="M60 158C48 116 66 70 100 64C134 70 152 116 140 158" fill="none" stroke="url(#' + p + 'edge)" stroke-width="2.6" stroke-linecap="round"/>';
+      },
+      hornShift: "translate(0 -10)",
+      face: function (p) {
+        return pair('<path d="M66 104Q80 98 94 107Q81 113 66 104Z" fill="url(#' + p + 'eye)" filter="url(#' + p + 'glow)"/>') +
+          '<path d="M72 125Q100 135 128 125Q121 141 100 142Q79 141 72 125Z" fill="url(#' + p + 'grin)"/>';
+      }
+    },
+    {
+      id: "gold", name: "Gold", bg: "night",
+      headFill: "gold", gloss: 0.45, rim: true,
+      face: function (p) {
+        return pair('<path d="' + EYE + '" fill="#170F08"/><ellipse cx="80" cy="102" rx="2.4" ry="4.6" fill="#FFE466" filter="url(#' + p + 'glow)"/>') +
+          '<path d="' + GRIN + '" fill="#1A110A"/>' +
+          '<path d="M66 121Q100 133 134 121" fill="none" stroke="#FFF3C4" stroke-opacity=".5" stroke-width="1.6" stroke-linecap="round"/>';
+      }
+    },
+    {
+      id: "cheeky", name: "Cheeky", bg: "sun",
+      face: function (p) {
+        return pair('<path d="M64 89L88 99.5L64 110" fill="none" stroke="' + LIT + '" stroke-width="6.5" stroke-linecap="round" stroke-linejoin="round" filter="url(#' + p + 'glow)"/>') +
+          '<path d="M62 113Q100 121 138 113Q134 145 100 147Q66 145 62 113Z" fill="#5E1606"/>' +
+          '<path d="M64 114Q100 122 136 114L135 120Q100 128 65 120Z" fill="url(#' + p + 'grin)"/>' +
+          '<path d="M85 128Q100 123 115 128L116 150L108 166L100 157L92 166L84 150Z" fill="url(#' + p + 'tongue)" stroke="#E8440F" stroke-width="1.5" stroke-linejoin="round"/>' +
+          '<path d="M100 131V153" stroke="#9E2607" stroke-opacity=".45" stroke-width="1.6" stroke-linecap="round"/>';
+      }
+    },
+    {
+      id: "halo", name: "Halo", bg: "tangerine",
+      front: function (p) {
+        return '<ellipse cx="100" cy="33" rx="34" ry="9" fill="none" stroke="#9E3E05" stroke-opacity=".3" stroke-width="6" transform="translate(0 2.5)"/>' +
+          '<ellipse cx="100" cy="31" rx="34" ry="9" fill="none" stroke="#FFF6CF" stroke-width="5.5" filter="url(#' + p + 'glow)"/>';
+      },
+      face: function (p) {
+        return pair('<path d="M64 103Q78 88 92 103" fill="none" stroke="' + LIT + '" stroke-width="6.5" stroke-linecap="round" filter="url(#' + p + 'glow)"/>') +
+          '<path d="M82 121Q100 129 118 121Q114 135 100 136Q86 135 82 121Z" fill="url(#' + p + 'grin)"/>' +
+          pair('<ellipse cx="64" cy="117" rx="8" ry="4.5" fill="#FF8A2A" opacity=".6"/>');
+      }
+    },
+    {
+      id: "masquerade", name: "Masquerade", bg: "honey",
+      face: function (p) {
+        var mask = "M44 92C52 80 74 79 100 90C126 79 148 80 156 92C152 109 136 116 118 110C110 107 104 102 100 102C96 102 90 107 82 110C64 116 48 109 44 92Z" +
+          "M62 96Q76 90 90 98Q80 106 68 104Q62 102 62 96Z" +
+          "M138 96Q124 90 110 98Q120 106 132 104Q138 102 138 96Z";
+        return pair('<path d="M46 90C37 84 31 73 34 62C41 74 48 80 55 83Z" fill="url(#' + p + 'mirror)" stroke="#8A4A06" stroke-opacity=".55" stroke-width="1.2"/>') +
+          '<path d="' + mask + '" fill="url(#' + p + 'mirror)" fill-rule="evenodd" stroke="#8A4A06" stroke-opacity=".55" stroke-width="1.2"/>' +
+          pair('<path d="M66 97Q77 93 87 99Q79 103.5 70 102Z" fill="url(#' + p + 'eye)" filter="url(#' + p + 'glow)"/>') +
+          '<path d="M100 84L104 89L100 94L96 89Z" fill="#FFF8DC"/>' +
+          '<path d="M76 124Q102 132 128 119Q122 137 102 138Q85 137 76 124Z" fill="url(#' + p + 'grin)"/>';
+      }
+    }
+  ];
+
+  // shape: "none" (full bleed, rounded by CSS), "circle" or "rounded"
+  function buildSVG(v, p, shape, label) {
+    var dark = v.bg === "night";
+    var clipDef = "";
+    var open = "<g>";
+    if (shape === "circle" || shape === "rounded") {
+      var s = shape === "circle" ? '<circle cx="100" cy="100" r="100"/>' : '<rect width="200" height="200" rx="46"/>';
+      clipDef = '<clipPath id="' + p + 'clip">' + s + "</clipPath>";
+      open = '<g clip-path="url(#' + p + 'clip)">';
+    }
+    var horn = horns(p);
+    if (v.hornShift) horn = '<g transform="' + v.hornShift + '">' + horn + "</g>";
+    var layers = [
+      '<rect width="200" height="200" fill="url(#' + p + 'bg)"/>',
+      '<rect width="200" height="200" fill="url(#' + p + 'sheen)"/>',
+      dark ? '<circle cx="100" cy="92" r="96" fill="url(#' + p + 'warm)"/>' : "",
+      v.back ? v.back(p) : "",
+      body(p, v.rim),
+      v.hornsAfter ? "" : horn,
+      v.noHead ? "" : head(p, v.headFill ? "url(#" + p + v.headFill + ")" : null, v.gloss),
+      v.noCollar ? "" : collar(p),
+      v.over ? v.over(p) : "",
+      v.hornsAfter ? horn : "",
+      v.front ? v.front(p) : "",
+      v.face(p)
+    ].join("");
+    var d = defs(p, v.bg).replace("</defs>", clipDef + "</defs>");
+    return '<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 200 200" width="200" height="200"' +
+      (label ? ' role="img" aria-label="' + label + '"' : ' aria-hidden="true" focusable="false"') + ">" +
+      d + open + layers + "</g></svg>";
+  }
+
+  var uid = 0;
+  function nextId() { uid += 1; return "d" + uid + "-"; }
+
+  // ---- render
+  var state = { shape: "circle" };
+
+  document.getElementById("mark").innerHTML = buildSVG(AVATARS[0], nextId(), "none");
+
+  var lineup = document.getElementById("lineup");
+  lineup.innerHTML = AVATARS.map(function (v, i) {
+    return '<li class="av">' +
+      '<div class="tile">' + buildSVG(v, nextId(), "none", v.name + " avatar") + "</div>" +
+      '<span class="name">' + v.name + "</span>" +
+      '<span class="file">avatar-' + v.id + ".svg</span>" +
+      '<button type="button" class="copy" data-i="' + i + '" aria-label="Copy the ' + v.name + ' avatar as SVG">Copy SVG</button>' +
+      "</li>";
+  }).join("");
+
+  var rows = document.getElementById("rows");
+  rows.innerHTML = [72, 40, 28].map(function (px) {
+    return '<div class="row"><span class="px">' + px + "px</span>" +
+      '<div class="set" role="img" aria-label="All ten avatars at ' + px + ' pixels">' +
+      AVATARS.map(function (v) {
+        return '<div class="tile" style="width:' + px + "px;height:" + px + 'px">' + buildSVG(v, nextId(), "none") + "</div>";
+      }).join("") +
+      "</div></div>";
+  }).join("");
+
+  // ---- shape toggle
+  var segButtons = document.querySelectorAll(".seg button");
+  Array.prototype.forEach.call(segButtons, function (btn) {
+    btn.addEventListener("click", function () {
+      state.shape = btn.getAttribute("data-shape");
+      document.body.setAttribute("data-shape", state.shape);
+      Array.prototype.forEach.call(segButtons, function (b) {
+        b.setAttribute("aria-pressed", b === btn ? "true" : "false");
+      });
+    });
+  });
+
+  // ---- copy
+  var toastEl = document.getElementById("toast");
+  var toastTimer;
+  function toast(msg) {
+    toastEl.textContent = msg;
+    toastEl.classList.add("show");
+    clearTimeout(toastTimer);
+    toastTimer = setTimeout(function () { toastEl.classList.remove("show"); }, 2400);
+  }
+
+  function fallbackCopy(text) {
+    try {
+      var ta = document.createElement("textarea");
+      ta.value = text;
+      ta.setAttribute("readonly", "");
+      ta.style.position = "fixed";
+      ta.style.opacity = "0";
+      document.body.appendChild(ta);
+      ta.select();
+      var ok = document.execCommand("copy");
+      document.body.removeChild(ta);
+      return ok;
+    } catch (e) { return false; }
+  }
+
+  lineup.addEventListener("click", function (e) {
+    var btn = e.target.closest(".copy");
+    if (!btn) return;
+    var v = AVATARS[Number(btn.getAttribute("data-i"))];
+    var svg = buildSVG(v, "sl-" + v.id + "-", state.shape);
+    var shapeName = state.shape === "circle" ? "circle" : "rounded square";
+    var done = function () { toast("Copied " + v.name + " as a " + shapeName + " SVG"); };
+    var fail = function () { toast("Copying is blocked here. Open the page in its own tab and try again."); };
+    if (navigator.clipboard && navigator.clipboard.writeText) {
+      navigator.clipboard.writeText(svg).then(done, function () { fallbackCopy(svg) ? done() : fail(); });
+    } else {
+      fallbackCopy(svg) ? done() : fail();
+    }
+  });
+})();
+</script>
+</body>
+</html>
