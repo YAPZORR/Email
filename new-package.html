@@ -1,0 +1,545 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Axoreels – Choose your plan</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<style>
+:root{
+  color-scheme: dark;
+  --page:#110c28;
+  --frame:#0b081e;
+  --box:#120e2b;
+  --line:rgba(255,255,255,.08);
+  --line-2:rgba(255,255,255,.16);
+  --text:#ffffff;
+  --muted:#a39dc0;
+  --dim:#77718f;
+  --pink:#f055b4;
+  --pink-2:#dd42a1;
+  --gold:#fecb00;
+  --gold-2:#e3b43a;
+  --r-lg:20px; --r:14px; --r-sm:12px;
+  box-sizing:border-box;
+  padding-top:env(safe-area-inset-top,0px);
+  padding-bottom:env(safe-area-inset-bottom,0px);
+}
+*,*::before,*::after{box-sizing:inherit}
+html{scroll-padding-top:env(safe-area-inset-top,0px);background:var(--page)}
+body{
+  margin:0;
+  font-family:"Plus Jakarta Sans",system-ui,-apple-system,"Segoe UI",Roboto,Arial,sans-serif;
+  color:var(--text);
+  background:
+    radial-gradient(1100px 620px at 0% 0%,rgba(96,52,190,.38),transparent 62%),
+    radial-gradient(900px 620px at 100% 100%,rgba(150,40,130,.24),transparent 62%),
+    var(--page);
+  -webkit-font-smoothing:antialiased;
+}
+button{font:inherit;color:inherit}
+svg{display:block}
+.sprite{position:absolute;width:0;height:0;overflow:hidden}
+
+.page{padding:clamp(16px,4vw,48px) clamp(12px,3vw,40px)}
+.frame{
+  max-width:1180px;margin:0 auto;
+  background:var(--frame);
+  border:1px solid var(--line);
+  border-radius:24px;
+  padding:clamp(16px,2.4vw,30px);
+  box-shadow:0 30px 80px rgba(0,0,0,.45);
+}
+
+/* Header */
+.head{display:flex;justify-content:space-between;align-items:flex-end;gap:18px 24px;flex-wrap:wrap;margin-bottom:20px}
+.title{margin:0;font-size:clamp(32px,4.4vw,50px);font-weight:800;letter-spacing:-.035em;line-height:1}
+.title span{color:#c63cee;background:linear-gradient(90deg,#d83fe3,#a958f7);-webkit-background-clip:text;background-clip:text;-webkit-text-fill-color:transparent}
+.sub{margin:10px 0 0;color:var(--muted);font-size:15px}
+.trust{display:flex;align-items:center;gap:12px}
+.avatars{display:flex}
+.avatars i{width:26px;height:26px;border-radius:50%;border:2px solid var(--frame);margin-left:-8px;display:grid;place-items:center;color:#fff}
+.avatars i:first-child{margin-left:0}
+.avatars svg{width:13px;height:13px}
+.trust-text{font-size:13px;color:var(--muted);line-height:1.5}
+.trust-text b{color:var(--text);font-weight:700}
+.stars{color:#fff;letter-spacing:1px;margin-right:4px}
+
+/* Plan tabs */
+.plans{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:12px;margin-bottom:16px}
+.plan{
+  position:relative;display:flex;align-items:center;gap:12px;
+  padding:16px;border-radius:var(--r);
+  background:linear-gradient(180deg,#1f1a3a,#17132e);
+  border:1px solid var(--line);
+  text-align:left;cursor:pointer;
+  transition:border-color .2s,background .2s,box-shadow .2s;
+}
+.plan:hover{border-color:var(--line-2)}
+.plan[aria-selected="true"]{
+  background:linear-gradient(120deg,#3d1d69,#2b1552 58%,#3b1a60);
+  border-color:#8f5cf7;
+  box-shadow:0 0 0 1px rgba(168,85,247,.5),0 0 30px rgba(168,85,247,.42);
+}
+.plan:focus-visible{outline:2px solid #fff;outline-offset:3px}
+.plan-icon{flex:none;width:40px;height:40px;border-radius:11px;display:grid;place-items:center;color:#fff}
+.plan-icon svg{width:20px;height:20px}
+.ic-monthly{background:linear-gradient(135deg,#9478ff,#6b48ff)}
+.ic-quarterly{background:linear-gradient(135deg,#ff7cc8,#e8459f)}
+.ic-annual{background:linear-gradient(135deg,#ffd45a,#f0a81b);color:#5b3b00}
+.ic-ultimate{background:linear-gradient(135deg,#46e2f2,#4c69ff)}
+.plan-meta{min-width:0}
+.plan-name{display:block;font-weight:700;font-size:15px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.plan-coins{display:flex;align-items:center;gap:5px;font-size:12px;color:var(--muted);margin-top:3px;white-space:nowrap}
+.plan-coins svg{width:12px;height:12px;flex:none}
+.plan-price{margin-left:auto;text-align:right;flex:none}
+.plan-price strong{display:block;font-size:24px;font-weight:800;letter-spacing:-.02em;line-height:1.05}
+.plan-price small{font-size:11px;color:var(--muted)}
+.badge{
+  position:absolute;top:-10px;right:14px;
+  display:inline-flex;align-items:center;gap:4px;
+  padding:3px 9px;border-radius:999px;
+  background:linear-gradient(180deg,#ffd950,#f4b51b);
+  color:#3d2700;font-size:11px;font-weight:700;
+  box-shadow:0 4px 12px rgba(245,184,28,.35);
+}
+.badge svg{width:11px;height:11px}
+
+/* Plan detail */
+.detail{background:#0f0b25;border:1px solid var(--line);border-radius:var(--r-lg);padding:12px}
+.summary{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-bottom:12px}
+.price-box{background:var(--box);border:1px solid var(--line);border-radius:var(--r);padding:18px 22px;display:flex;flex-direction:column;justify-content:center}
+.price-main{display:flex;align-items:baseline;gap:6px}
+.price-main strong{font-size:clamp(30px,3.2vw,40px);font-weight:800;letter-spacing:-.03em;line-height:1}
+.price-main span{color:var(--muted);font-size:12px}
+.price-line{margin-top:8px;font-size:13px;font-weight:600;color:#ddd8f0}
+.stats{
+  display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:8px;padding:8px;
+  border-radius:var(--r);border:1px solid transparent;
+  background:
+    linear-gradient(#0e0b22,#0e0b22) padding-box,
+    linear-gradient(120deg,rgba(254,203,0,.38),rgba(255,255,255,.06) 42%,rgba(254,203,0,.26)) border-box;
+}
+.stat{display:flex;align-items:center;gap:10px;background:#0b091f;border:1px solid var(--line);border-radius:var(--r-sm);padding:12px;min-width:0}
+.stat-ic{flex:none;width:38px;height:38px;border-radius:11px;display:grid;place-items:center;color:#fff}
+.stat-ic svg{width:19px;height:19px}
+.stat-ic.coin{border-radius:50%;background:none}
+.stat-ic.coin svg{width:38px;height:38px}
+.stat-ic.video{background:linear-gradient(135deg,#ff7cc8,#e2449f)}
+.stat-ic.image{background:linear-gradient(135deg,#9a7bff,#6c4cff)}
+.stat strong{display:block;font-size:24px;font-weight:800;line-height:1;letter-spacing:-.02em}
+.stat span{font-size:12px;color:var(--muted)}
+.stat.coins strong{color:var(--gold)}
+
+/* Benefits */
+.benefits{background:var(--box);border:1px solid var(--line);border-radius:var(--r);padding:16px}
+.ben-head{display:flex;justify-content:space-between;align-items:baseline;gap:12px;font-size:12px;font-weight:700}
+.ben-head .count{color:var(--muted);font-weight:500;white-space:nowrap}
+.ben-head .count b{color:#fff;font-weight:700}
+.segs{display:grid;grid-template-columns:repeat(14,1fr);gap:6px;margin:10px 0 14px}
+.segs i{height:4px;border-radius:4px;background:#2b1a3e;transition:background .3s,box-shadow .3s}
+.segs i.on{background:linear-gradient(90deg,#c43ee8,#f055b4);box-shadow:0 0 8px rgba(240,85,180,.45)}
+.grid{list-style:none;margin:0;padding:0;display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:10px}
+.ben{
+  display:flex;align-items:center;gap:12px;min-height:64px;
+  padding:12px 14px;border-radius:var(--r-sm);
+  background:linear-gradient(135deg,#391640,#281333);
+  border:1px solid rgba(240,85,180,.28);
+  transition:background .25s,border-color .25s;
+}
+.ben-ic{flex:none;width:32px;height:32px;border-radius:9px;display:grid;place-items:center;color:#fff;background:linear-gradient(135deg,#ff76c9,#e2449f);box-shadow:0 4px 12px rgba(226,68,159,.35);transition:background .25s,box-shadow .25s,color .25s}
+.ben-ic svg{width:16px;height:16px}
+.ben p{margin:0;flex:1;min-width:0;font-size:13px;font-weight:700;line-height:1.3;transition:color .25s}
+.mark{flex:none;width:20px;height:20px;border-radius:50%;display:grid;place-items:center;background:#fff;color:#c2378f;transition:background .25s,color .25s}
+.mark svg{width:12px;height:12px}
+.ben.locked{background:#16122b;border-color:rgba(255,255,255,.07)}
+.ben.locked .ben-ic{background:#262140;color:#8a84a8;box-shadow:none}
+.ben.locked p{color:var(--dim)}
+.ben.locked .mark{background:transparent;color:var(--dim);box-shadow:inset 0 0 0 1px rgba(255,255,255,.14)}
+
+.every{grid-column:4;grid-row:3 / span 2}
+.every-tile{
+  width:100%;height:100%;min-height:64px;
+  display:flex;flex-direction:column;align-items:center;justify-content:center;gap:6px;
+  padding:14px;border-radius:var(--r-sm);
+  background:#17120e;border:1px solid rgba(227,180,58,.32);
+  color:var(--gold-2);text-align:center;
+}
+.every-tile .row{display:flex;align-items:center;gap:8px;font-size:13px;font-weight:700}
+.every-tile svg{width:16px;height:16px}
+.every-tile small{font-size:12px;color:var(--muted);font-weight:500}
+button.every-tile{cursor:pointer;transition:border-color .2s,background .2s}
+button.every-tile:hover{border-color:rgba(227,180,58,.6);background:#1d1710}
+button.every-tile:focus-visible{outline:2px solid #fff;outline-offset:2px}
+
+/* Payment */
+.pay{margin-top:12px;background:#0f0b25;border:1px solid var(--line);border-radius:var(--r-lg);padding:14px}
+.btn-card{
+  position:relative;width:100%;height:54px;border:0;border-radius:var(--r-sm);
+  background:linear-gradient(90deg,#f45cba,#d73e9d);
+  font-weight:700;font-size:15px;
+  display:flex;align-items:center;justify-content:center;gap:10px;cursor:pointer;
+  box-shadow:0 10px 30px rgba(221,66,161,.32);
+}
+.btn-card .pill{background:rgba(255,255,255,.22);padding:3px 10px;border-radius:999px;font-size:13px}
+.btn-card .go{position:absolute;right:12px;top:50%;transform:translateY(-50%);width:30px;height:30px;border-radius:50%;border:1px solid rgba(255,255,255,.55);display:grid;place-items:center}
+.btn-card .go svg{width:15px;height:15px}
+.btn-card:focus-visible,.btn-alt:focus-visible,.btn-guide:focus-visible{outline:2px solid #fff;outline-offset:3px}
+.alt{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-top:10px}
+.btn-alt{height:46px;border-radius:var(--r-sm);font-weight:600;font-size:14px;display:flex;align-items:center;justify-content:center;gap:8px;cursor:pointer}
+.btn-alt svg{width:16px;height:16px}
+.btn-tg{background:#121c3a;border:1px solid rgba(80,140,255,.3)}
+.btn-tg svg{color:#5aa9ff}
+.btn-crypto{background:#1f1824;border:1px solid rgba(240,170,60,.32)}
+.btn-crypto svg{color:#f3a93a}
+.secure{display:flex;align-items:center;justify-content:center;gap:8px;margin-top:12px;font-size:11px;color:var(--muted);flex-wrap:wrap}
+.secure > svg{width:13px;height:13px;color:#3ddc97}
+/* Neutral placeholders: swap in the official payment badges from the live site */
+.cards{display:flex;gap:6px}
+.cards span{background:#fff;color:#1b1b2f;border-radius:4px;padding:2px 6px;font-size:10px;font-weight:700;line-height:1.4}
+
+/* Telegram guide */
+.guide{
+  margin-top:12px;display:flex;align-items:center;gap:14px;padding:14px 16px;border-radius:var(--r);
+  background:linear-gradient(90deg,#1a1b46,#151236 60%,#1a1236);border:1px solid var(--line);
+}
+.guide-ic{flex:none;width:44px;height:44px;border-radius:12px;display:grid;place-items:center;background:linear-gradient(135deg,#7b5cff,#4f6dff);color:#fff;box-shadow:0 6px 16px rgba(91,92,255,.35)}
+.guide-ic svg{width:20px;height:20px}
+.guide-copy{min-width:0}
+.guide .q{display:flex;align-items:center;gap:6px;font-size:12px;color:var(--muted)}
+.new{background:linear-gradient(90deg,#c43ee8,#f055b4);color:#fff;font-size:10px;font-weight:700;padding:2px 6px;border-radius:5px}
+.guide h3{margin:3px 0 2px;font-size:15px;font-weight:700}
+.guide p{margin:0;font-size:12px;color:var(--muted)}
+.btn-guide{
+  margin-left:auto;flex:none;height:36px;padding:0 16px;border:0;border-radius:999px;
+  background:linear-gradient(90deg,#3f8cff,#7a5cff);
+  font-weight:700;font-size:13px;display:inline-flex;align-items:center;justify-content:center;gap:6px;cursor:pointer;white-space:nowrap;
+}
+.btn-guide svg{width:14px;height:14px}
+
+/* Tablet */
+@media (max-width:1080px){
+  .plans{grid-template-columns:repeat(2,minmax(0,1fr));row-gap:16px}
+  .summary{grid-template-columns:1fr}
+  .grid{grid-template-columns:repeat(2,minmax(0,1fr))}
+  .every{grid-column:1 / -1;grid-row:auto}
+}
+/* Phone */
+@media (max-width:640px){
+  .head{align-items:flex-start}
+  .sub{font-size:14px}
+  .plan{flex-direction:column;align-items:flex-start;gap:10px;padding:14px}
+  .plan-meta{width:100%}
+  .plan-price{margin-left:0;text-align:left}
+  .plan-price strong{font-size:22px}
+  .badge{right:10px}
+  .price-box{padding:16px}
+  .stat{flex-direction:column;align-items:flex-start;gap:8px;padding:10px}
+  .stat strong{font-size:20px}
+  .grid{grid-template-columns:1fr}
+  .ben{min-height:56px}
+  .alt{grid-template-columns:1fr}
+  .guide{flex-wrap:wrap}
+  .btn-guide{width:100%;margin-left:0}
+}
+@media (prefers-reduced-motion:reduce){
+  *,*::before,*::after{transition:none !important}
+}
+</style>
+</head>
+<body>
+
+<svg class="sprite" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+  <defs>
+    <linearGradient id="g-coin" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#ffe066"/><stop offset="1" stop-color="#f2a900"/></linearGradient>
+  </defs>
+  <symbol id="i-coin-sm" viewBox="0 0 12 12"><circle cx="6" cy="6" r="6" fill="url(#g-coin)"/><circle cx="6" cy="6" r="3.6" fill="none" stroke="#b97f00" stroke-width="1.2"/></symbol>
+  <symbol id="i-coin-lg" viewBox="0 0 38 38"><circle cx="19" cy="19" r="19" fill="url(#g-coin)"/><circle cx="19" cy="19" r="14.5" fill="none" stroke="#c98a00" stroke-width="1.6"/><text x="19" y="25.5" text-anchor="middle" font-family="Plus Jakarta Sans,Arial,sans-serif" font-size="18" font-weight="800" fill="#8a5a00">$</text></symbol>
+  <g>
+    <symbol id="i-bolt" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M13 2 4 14h7l-1 8 9-12h-7z"/></symbol>
+    <symbol id="i-flame" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M8.5 14.5A2.5 2.5 0 0 0 11 12c0-1.38-.5-2-1-3-1.07-2.14-.22-4.05 2-6 .5 2.5 2 4.9 4 6.5 2 1.6 3 3.5 3 5.5a7 7 0 1 1-14 0c0-1.15.43-2.29 1-3a2.5 2.5 0 0 0 2.5 2.5z"/></symbol>
+    <symbol id="i-crown" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M11.56 3.27a.5.5 0 0 1 .88 0l2.95 5.6a1 1 0 0 0 1.52.3l4.27-3.67a.5.5 0 0 1 .8.52l-2.83 10.25a1 1 0 0 1-.96.73H5.81a1 1 0 0 1-.96-.73L2.02 6.02a.5.5 0 0 1 .8-.52l4.27 3.67a1 1 0 0 0 1.52-.3z"/><path d="M5 21h14"/></symbol>
+    <symbol id="i-gem" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M6 3h12l4 6-10 13L2 9z"/><path d="M11 3 8 9l4 13 4-13-3-6"/><path d="M2 9h20"/></symbol>
+    <symbol id="i-play" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="5" width="18" height="14" rx="3"/><path d="m10 9 5 3-5 3z"/></symbol>
+    <symbol id="i-image" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="18" height="18" rx="3"/><circle cx="9" cy="9" r="2"/><path d="m21 15-5-5L5 21"/></symbol>
+    <symbol id="i-wand" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m21.64 3.64-1.28-1.28a1.21 1.21 0 0 0-1.72 0L2.36 18.64a1.21 1.21 0 0 0 0 1.72l1.28 1.28a1.2 1.2 0 0 0 1.72 0L21.64 5.36a1.2 1.2 0 0 0 0-1.72"/><path d="m14 7 3 3"/><path d="M5 6v4"/><path d="M19 14v4"/><path d="M10 2v2"/><path d="M7 8H3"/><path d="M21 16h-4"/></symbol>
+    <symbol id="i-cube" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z"/><path d="m3.3 7 8.7 5 8.7-5"/><path d="M12 22V12"/></symbol>
+    <symbol id="i-shield" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 13c0 5-3.5 7.5-7.66 8.95a1 1 0 0 1-.67-.01C7.5 20.5 4 18 4 13V6a1 1 0 0 1 1-1c2 0 4.5-1.2 6.24-2.72a1.17 1.17 0 0 1 1.52 0C14.51 3.81 17 5 19 5a1 1 0 0 1 1 1z"/></symbol>
+    <symbol id="i-film" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="18" height="18" rx="2"/><path d="M7 3v18"/><path d="M17 3v18"/><path d="M3 12h18"/></symbol>
+    <symbol id="i-hd" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="4" width="20" height="16" rx="2"/><path d="M7 9v6"/><path d="M11 9v6"/><path d="M7 12h4"/><path d="M14 9h2a2 2 0 0 1 2 2v2a2 2 0 0 1-2 2h-2z"/></symbol>
+    <symbol id="i-scan" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 7V5a2 2 0 0 1 2-2h2"/><path d="M17 3h2a2 2 0 0 1 2 2v2"/><path d="M21 17v2a2 2 0 0 1-2 2h-2"/><path d="M7 21H5a2 2 0 0 1-2-2v-2"/><path d="M8 14s1.5 2 4 2 4-2 4-2"/><path d="M9 9h.01"/><path d="M15 9h.01"/></symbol>
+    <symbol id="i-gauge" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m12 14 4-4"/><path d="M3.34 19a10 10 0 1 1 17.32 0"/></symbol>
+    <symbol id="i-copy" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="8" y="8" width="14" height="14" rx="2"/><path d="M4 16c-1.1 0-2-.9-2-2V4c0-1.1.9-2 2-2h10c1.1 0 2 .9 2 2"/></symbol>
+    <symbol id="i-upload" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><path d="m17 8-5-5-5 5"/><path d="M12 3v12"/></symbol>
+    <symbol id="i-clock" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><path d="M12 6v6l4 2"/></symbol>
+    <symbol id="i-cpu" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="4" y="4" width="16" height="16" rx="2"/><rect x="9" y="9" width="6" height="6"/><path d="M15 2v2M15 20v2M2 15h2M2 9h2M20 15h2M20 9h2M9 2v2M9 20v2"/></symbol>
+    <symbol id="i-volume" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M11 4.7a.7.7 0 0 0-1.2-.5L6.4 7.6A1.4 1.4 0 0 1 5.4 8H3a1 1 0 0 0-1 1v6a1 1 0 0 0 1 1h2.4a1.4 1.4 0 0 1 1 .4l3.4 3.4a.7.7 0 0 0 1.2-.5z"/><path d="M16 9a5 5 0 0 1 0 6"/><path d="M19.4 18.4a9 9 0 0 0 0-12.7"/></symbol>
+    <symbol id="i-branch" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M6 3v12"/><circle cx="18" cy="6" r="3"/><circle cx="6" cy="18" r="3"/><path d="M18 9a9 9 0 0 1-9 9"/></symbol>
+    <symbol id="i-check" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5" stroke-width="3"/></symbol>
+    <symbol id="i-lock" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="4" y="11" width="16" height="10" rx="2"/><path d="M8 11V7a4 4 0 0 1 8 0v4"/></symbol>
+    <symbol id="i-arrow" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14"/><path d="m12 5 7 7-7 7"/></symbol>
+    <symbol id="i-send" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14.54 21.69a.5.5 0 0 0 .94-.03l6.5-19a.5.5 0 0 0-.64-.63l-19 6.5a.5.5 0 0 0-.02.93l7.93 3.18a2 2 0 0 1 1.11 1.11z"/><path d="m21.85 2.15-10.94 10.94"/></symbol>
+    <symbol id="i-coins" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="8" cy="8" r="6"/><path d="M18.09 10.37A6 6 0 1 1 10.34 18"/><path d="M7 6h1v4"/><path d="m16.71 13.88.7.71-2.82 2.82"/></symbol>
+    <symbol id="i-sparkles" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9.94 15.5A2 2 0 0 0 8.5 14.06l-6.13-1.58a.5.5 0 0 1 0-.96L8.5 9.94A2 2 0 0 0 9.94 8.5l1.58-6.13a.5.5 0 0 1 .96 0L14.06 8.5A2 2 0 0 0 15.5 9.94l6.13 1.58a.5.5 0 0 1 0 .96L15.5 14.06a2 2 0 0 0-1.44 1.44l-1.58 6.13a.5.5 0 0 1-.96 0z"/><path d="M20 3v4"/><path d="M22 5h-4"/></symbol>
+    <symbol id="i-unlock" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="4" y="11" width="16" height="10" rx="2"/><path d="M8 11V7a4 4 0 0 1 7.9-1"/></symbol>
+    <symbol id="i-user" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="8" r="4"/><path d="M4 21a8 8 0 0 1 16 0"/></symbol>
+    <symbol id="i-shield-check" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="4" y="11" width="16" height="10" rx="2"/><path d="M8 11V7a4 4 0 0 1 8 0v4"/></symbol>
+  </g>
+</svg>
+
+<main class="page">
+  <div class="frame">
+
+    <header class="head">
+      <div>
+        <h1 class="title">Choose your <span>plan</span></h1>
+        <p class="sub">Unlock unlimited creativity with the plan that fits you.</p>
+      </div>
+      <div class="trust">
+        <div class="avatars" aria-hidden="true">
+          <i style="background:#7b5cff"><svg><use href="#i-user"/></svg></i>
+          <i style="background:#ef5ab4"><svg><use href="#i-user"/></svg></i>
+          <i style="background:#f2a61f"><svg><use href="#i-user"/></svg></i>
+          <i style="background:#3f9bff"><svg><use href="#i-user"/></svg></i>
+        </div>
+        <div class="trust-text">
+          Trusted by <b>1M+</b> creators worldwide<br>
+          <span class="stars" aria-hidden="true">★★★★★</span><b>1000+</b> ratings
+        </div>
+      </div>
+    </header>
+
+    <!-- Plan list: each card is a tab. The fourth card (Ultimate Pro) is the new package. -->
+    <div class="plans" role="tablist" aria-label="Plans">
+      <button class="plan" role="tab" id="tab-monthly" data-plan="monthly" aria-controls="plan-panel" aria-selected="false" tabindex="-1" type="button">
+        <span class="plan-icon ic-monthly"><svg aria-hidden="true"><use href="#i-bolt"/></svg></span>
+        <span class="plan-meta">
+          <span class="plan-name">Monthly Pro</span>
+          <span class="plan-coins"><svg aria-hidden="true"><use href="#i-coin-sm"/></svg>300 coins</span>
+        </span>
+        <span class="plan-price"><strong>$4.33</strong><small>/ 100 coins</small></span>
+      </button>
+
+      <button class="plan" role="tab" id="tab-quarterly" data-plan="quarterly" aria-controls="plan-panel" aria-selected="false" tabindex="-1" type="button">
+        <span class="plan-icon ic-quarterly"><svg aria-hidden="true"><use href="#i-flame"/></svg></span>
+        <span class="plan-meta">
+          <span class="plan-name">Quarterly Pro</span>
+          <span class="plan-coins"><svg aria-hidden="true"><use href="#i-coin-sm"/></svg>1,500 coins</span>
+        </span>
+        <span class="plan-price"><strong>$2.67</strong><small>/ 100 coins</small></span>
+      </button>
+
+      <button class="plan" role="tab" id="tab-annual" data-plan="annual" aria-controls="plan-panel" aria-selected="false" tabindex="-1" type="button">
+        <span class="plan-icon ic-annual"><svg aria-hidden="true"><use href="#i-crown"/></svg></span>
+        <span class="plan-meta">
+          <span class="plan-name">Annual Pro</span>
+          <span class="plan-coins"><svg aria-hidden="true"><use href="#i-coin-sm"/></svg>5,200 coins</span>
+        </span>
+        <span class="plan-price"><strong>$1.35</strong><small>/ 100 coins</small></span>
+      </button>
+
+      <!-- NEW PACKAGE -->
+      <button class="plan" role="tab" id="tab-ultimate" data-plan="ultimate" aria-controls="plan-panel" aria-selected="true" tabindex="0" type="button">
+        <span class="badge"><svg aria-hidden="true"><use href="#i-crown"/></svg>Best value</span>
+        <span class="plan-icon ic-ultimate"><svg aria-hidden="true"><use href="#i-gem"/></svg></span>
+        <span class="plan-meta">
+          <span class="plan-name">Ultimate Pro</span>
+          <span class="plan-coins"><svg aria-hidden="true"><use href="#i-coin-sm"/></svg>12,000 coins</span>
+        </span>
+        <span class="plan-price"><strong>$1.24</strong><small>/ 100 coins</small></span>
+      </button>
+    </div>
+
+    <!-- Tab panel: everything below updates for the selected plan -->
+    <div id="plan-panel" role="tabpanel" aria-labelledby="tab-ultimate">
+      <section class="detail" aria-label="Plan details">
+        <div class="summary">
+          <div class="price-box">
+            <div class="price-main"><strong id="d-rate">$1.24</strong><span>/ 100 coins</span></div>
+            <div class="price-line" id="d-line">$148.99 for 12,000 coins</div>
+          </div>
+          <div class="stats">
+            <div class="stat coins">
+              <span class="stat-ic coin"><svg aria-hidden="true"><use href="#i-coin-lg"/></svg></span>
+              <div><strong id="d-coins">12,000</strong><span>Coins</span></div>
+            </div>
+            <div class="stat">
+              <span class="stat-ic video"><svg aria-hidden="true"><use href="#i-play"/></svg></span>
+              <div><strong id="d-videos">276</strong><span>Videos</span></div>
+            </div>
+            <div class="stat">
+              <span class="stat-ic image"><svg aria-hidden="true"><use href="#i-image"/></svg></span>
+              <div><strong id="d-images">923</strong><span>Images</span></div>
+            </div>
+          </div>
+        </div>
+
+        <div class="benefits">
+          <div class="ben-head">
+            <span id="d-in">In Ultimate Pro</span>
+            <span class="count" id="d-count"><b>14</b> of 14 benefits</span>
+          </div>
+          <div class="segs" id="segs" aria-hidden="true"></div>
+          <ul class="grid" id="grid"></ul>
+        </div>
+      </section>
+
+      <section class="pay" aria-label="Payment">
+        <button class="btn-card" type="button">
+          Pay with card <span class="pill" id="d-total">$148.99</span>
+          <span class="go" aria-hidden="true"><svg><use href="#i-arrow"/></svg></span>
+        </button>
+        <div class="alt">
+          <button class="btn-alt btn-tg" type="button"><svg aria-hidden="true"><use href="#i-send"/></svg>Pay with Telegram</button>
+          <button class="btn-alt btn-crypto" type="button"><svg aria-hidden="true"><use href="#i-coins"/></svg>Pay with crypto</button>
+        </div>
+        <div class="secure">
+          <svg aria-hidden="true"><use href="#i-lock"/></svg>Secure payment
+          <span class="cards"><span>Visa</span><span>Mastercard</span><span>Apple Pay</span><span>PayPal</span></span>
+        </div>
+      </section>
+    </div>
+
+    <aside class="guide">
+      <span class="guide-ic" aria-hidden="true"><svg><use href="#i-send"/></svg></span>
+      <div class="guide-copy">
+        <div class="q"><span class="new">New</span>Prefer to pay with Telegram?</div>
+        <h3>How to Purchase Coins via Telegram</h3>
+        <p>Follow our step-by-step guide to complete your payment and unlock more AI creations instantly.</p>
+      </div>
+      <button class="btn-guide" type="button">Read the guide <svg aria-hidden="true"><use href="#i-arrow"/></svg></button>
+    </aside>
+
+  </div>
+</main>
+
+<script>
+/* Plan data. "ultimate" is the new package. */
+var PLANS = [
+  { key:"monthly",   name:"Monthly Pro",   coins:300,   rate:"$4.33", total:"$12.99",  line:"$12.99 per month \u2022 Billed monthly",     videos:7,   images:23,  level:1 },
+  { key:"quarterly", name:"Quarterly Pro", coins:1500,  rate:"$2.67", total:"$39.99",  line:"$39.99 per quarter \u2022 Billed quarterly", videos:30,  images:100, level:2 },
+  { key:"annual",    name:"Annual Pro",    coins:5200,  rate:"$1.35", total:"$69.99",  line:"$69.99 per year \u2022 Billed yearly",       videos:120, images:400, level:3 },
+  { key:"ultimate",  name:"Ultimate Pro",  coins:12000, rate:"$1.24", total:"$148.99", line:"$148.99 for 12,000 coins",                   videos:276, images:923, level:3 }
+];
+
+/* Benefits in grid order. min = lowest plan level that includes it.
+   An array label changes by level (1 Monthly, 2 Quarterly, 3 Annual and Ultimate). */
+var BENEFITS = [
+  { icon:"wand",   min:1, label:"Generate videos with custom prompts" },
+  { icon:"cube",   min:1, label:"Train your own AI model" },
+  { icon:"shield", min:3, label:"Enhanced adult content generation" },
+  { icon:"film",   min:2, label:"Video compilation generation" },
+  { icon:"hd",     min:1, label:["Video quality up to 720p HD","Video quality up to 1080p Full HD","Video quality up to 4K Ultra HD"] },
+  { icon:"scan",   min:1, label:"Image face swap" },
+  { icon:"crown",  min:3, label:"Exclusive templates" },
+  { icon:"gauge",  min:3, label:"Video generation up to 60 FPS" },
+  { icon:"copy",   min:1, label:["Generate 2 tasks simultaneously","Generate 5 tasks simultaneously","Generate 10 tasks simultaneously"] },
+  { icon:"upload", min:2, label:"Upload face or pose references" },
+  { icon:"clock",  min:3, label:"Early access to new templates" },
+  { icon:"cpu",    min:1, label:["Standard processing","Priority processing","Highest-priority processing"] },
+  { icon:"volume", min:2, label:"Generate videos with sound" },
+  { icon:"branch", min:3, label:"Storyline branching" }
+];
+
+(function(){
+  var $ = function(id){ return document.getElementById(id); };
+  var fmt = function(n){ return n.toLocaleString("en-US"); };
+  var use = function(name){ return '<svg aria-hidden="true"><use href="#i-' + name + '"/></svg>'; };
+  var tabs = Array.prototype.slice.call(document.querySelectorAll('.plan[role="tab"]'));
+  var panel = $("plan-panel");
+  var grid = $("grid");
+  var segs = $("segs");
+  var total = BENEFITS.length;
+
+  /* Build segments and benefit tiles once, then toggle state per plan */
+  var segEls = [];
+  for (var i = 0; i < total; i++){ var s = document.createElement("i"); segs.appendChild(s); segEls.push(s); }
+
+  var tiles = BENEFITS.map(function(b){
+    var li = document.createElement("li");
+    li.className = "ben";
+    li.innerHTML = '<span class="ben-ic">' + use(b.icon) + '</span><p></p><span class="mark"></span>';
+    grid.appendChild(li);
+    return li;
+  });
+  var every = document.createElement("li");
+  every.className = "every";
+  grid.appendChild(every);
+
+  function select(key, opts){
+    opts = opts || {};
+    var p = PLANS.filter(function(x){ return x.key === key; })[0] || PLANS[PLANS.length - 1];
+
+    tabs.forEach(function(t){
+      var on = t.dataset.plan === p.key;
+      t.setAttribute("aria-selected", on ? "true" : "false");
+      t.tabIndex = on ? 0 : -1;
+      if (on && opts.focus) t.focus();
+    });
+    panel.setAttribute("aria-labelledby", "tab-" + p.key);
+
+    $("d-rate").textContent = p.rate;
+    $("d-line").textContent = p.line;
+    $("d-coins").textContent = fmt(p.coins);
+    $("d-videos").textContent = fmt(p.videos);
+    $("d-images").textContent = fmt(p.images);
+    $("d-total").textContent = p.total;
+    $("d-in").textContent = "In " + p.name;
+
+    var included = 0;
+    BENEFITS.forEach(function(b, i){
+      var on = b.min <= p.level;
+      if (on) included++;
+      var li = tiles[i];
+      li.classList.toggle("locked", !on);
+      li.querySelector("p").textContent = Array.isArray(b.label) ? b.label[p.level - 1] : b.label;
+      var mark = li.querySelector(".mark");
+      mark.innerHTML = use(on ? "check" : "lock");
+      mark.setAttribute("aria-label", on ? "Included" : "Not included");
+      mark.setAttribute("role", "img");
+    });
+    segEls.forEach(function(s, i){ s.classList.toggle("on", i < included); });
+    $("d-count").innerHTML = "<b>" + included + "</b> of " + total + " benefits";
+
+    if (included === total){
+      every.innerHTML = '<div class="every-tile"><span class="row">' + use("sparkles") + 'Every benefit included</span></div>';
+    } else {
+      every.innerHTML = '<button class="every-tile" type="button" data-go="annual"><span class="row">' + use("unlock") +
+        'Unlock ' + (total - included) + ' more benefits</span><small>Get all ' + total + ' with Annual Pro</small></button>';
+    }
+
+    if (opts.hash !== false && location.hash !== "#" + p.key){
+      try { history.replaceState(null, "", "#" + p.key); } catch (e) {}
+    }
+  }
+
+  tabs.forEach(function(t, idx){
+    t.addEventListener("click", function(){ select(t.dataset.plan); });
+    t.addEventListener("keydown", function(e){
+      var next = null;
+      if (e.key === "ArrowRight" || e.key === "ArrowDown") next = (idx + 1) % tabs.length;
+      else if (e.key === "ArrowLeft" || e.key === "ArrowUp") next = (idx - 1 + tabs.length) % tabs.length;
+      else if (e.key === "Home") next = 0;
+      else if (e.key === "End") next = tabs.length - 1;
+      if (next !== null){ e.preventDefault(); select(tabs[next].dataset.plan, { focus:true }); }
+    });
+  });
+
+  grid.addEventListener("click", function(e){
+    var btn = e.target.closest("[data-go]");
+    if (btn) select(btn.dataset.go, { focus:true });
+  });
+
+  function fromHash(){
+    var key = location.hash.replace("#", "");
+    var known = PLANS.some(function(p){ return p.key === key; });
+    select(known ? key : "ultimate", { hash:false });
+  }
+  window.addEventListener("hashchange", fromHash);
+  fromHash();
+})();
+</script>
+</body>
+</html>
